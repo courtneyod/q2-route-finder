@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../stylesheets/style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRIiHf8ZLSzIhVTGQoedYNO7pM8UQD6dk&libraries=places"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.js" ></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="../javascripts/controllers/index.js" charset="utf-8"></script>
+    <title>Route Finder</title>
+</head>
+
+<body>
+    <div class="navbar-fixed">
+        <nav class="master-nav-head">
+            <div class="nav-wrapper">
+                <img class="nav-content" src="../images/route-finder.png" alt="" />
+                <p class="nav-content nav-copy"><a class="nav-content" href="index.html">RouteFinder</a></p>
+            </div>
+        </nav>
+    </div>
+    <main class="main-container">
+        <div>
+            <p class="main-headline">
+                Plan Your Route
+            </p>
+        </div>
+        <div class="row form-container">
+            <form id="form" class="route-input" action="route-options.html" method="GET">
+                <p class="form-headline">
+                    Where would you like to go?
+                </p>
+                <div class="input-wrapper">
+                    <div class="input-field">
+                        <fieldset class="user-inputs">
+                            <div class="input-group">
+                                <label class="homepage-label" for="location">Location </label>
+                                <input class="user-input-homepage" type="text" placeholder="Location" id="location" name="location" required />
+                            </div>
+                            <div class="input-group select-group">
+                              <label class="homepage-label show-label-text" for="mile-range">Within  </label>
+                                <select name="milerange" class="select-mile-range" id="mile-range">
+                                  <option value="5-miles">5 miles</option>
+                                  <option value="10">10 miles</option>
+                                  <option value="15">15 miles</option>
+                                  <option value="20">20 miles</option>
+                                  <option value="25">25 miles</option>
+                                  <option value="30">30 miles</option>
+                                  <option value="35">35 miles</option>
+                                  <option value="40">40 miles</option>
+                                  <option value="45">45 miles</option>
+                                  <option value="50">50 miles</option>
+                                </select>
+                            </div>
+
+
+                            <div class="input-group">
+                              <label class="range-slider homepage-label" for="amount">Distance:</label>
+                              <input type="text" name="distancerange" class="range-slider" id="distance" readonly style="border:0; color:#FC4C02; font-weight:bold;">
+                              <div id="slider-range"></div>
+                            </div>
+
+                            <div class="input-group">
+                              <label id="elevation-range" class="range-slider homepage-label" for="amount">Elevation:</label>
+                              <!-- give them names and parse  -->
+                              <input type="text" class="elecation-range" name="elevationrange" id="elevation" readonly style="border:0; color:#FC4C02; font-weight:bold;">
+                            <div id="slider-range-elevation"></div>
+                                </div>
+
+
+                        </fieldset>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn-large waves-effect waves-light" id="search-button" type="submit" name="action">Search</button>
+                    </div>
+            </form>
+            </div>
+
+    </main>
+    <section class="details-container">
+      <div class="details-div">
+        <div class="details-copy">
+          <h2>Discover new routes that work for you!  </h2>
+          <p>
+            Don't spend all day sifting through blog posts to find a fun ride.
+          </p>
+        </div>
+
+        <div class="details-image">
+
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-container">
+        <ul class="footer-list">
+          <li>
+            &copy; Courtney O'Donnell
+          </li>
+        </ul>
+        <ul class="footer-list">
+          <li>Ride with GPS API</li>
+          <li>Google Maps Api</li>
+        </ul>
+      </div>
+    </footer>
+</body>
+
+</html>
