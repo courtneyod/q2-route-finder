@@ -26,24 +26,10 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
-
-
-// strava.athlete.get({},function(err,payload) {
-//     if(!err) {
-//         console.log(payload, 'here is courtney');
-//     }
-//     else {
-//         console.log(err);
-//     }
-// });
-
-// app.get('/', function(req, res){
-//   console.log('hi')
-//   res.sendFile('/views/index.html')
-// })
-// // app.get('/', express.static(path.join(__dirname, 'public/views/index.html')))
-// app.get('/explore', express.static(path.join(__dirname, 'public/views/route-options.html')))
-
+// set the view engine to ejs
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+// app.use('/', express.static(path.join(__dirname, 'public')))
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -58,7 +44,7 @@ app.use('/rides', rides);
 app.use('/login', login);
 app.use('/favorites', favorites);
 app.use('/auth', auth);
-app.use('/dashboard', auth);
+app.use('/dashboard', dashboard);
 
 //Update the cookie session secret to use the secret key in the JWT_SECRET environment variable.
 app.use(cookieSession({
@@ -124,7 +110,7 @@ app.use(cookieSession({
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('No route matches the page');
   err.status = 404;
   next(err);
 });

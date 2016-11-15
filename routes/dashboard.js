@@ -6,6 +6,8 @@ var knex = require('../knex');
 const bcrypt = require('bcrypt-as-promised');
 const {camelizeKeys, decamelizeKeys} = require('humps');
 var cookieParser = require('cookie-parser')
+var strava = require('strava-v3');
+
 
 const boom = require('boom');
 
@@ -26,7 +28,7 @@ router.get("/", function(req, res){
 			path: '/',
 			httpOnly: true
 		};
-		res.cookie('/authentication', access_token, opts);
+		res.cookie('/oauth_token', access_token, opts);
 		res.cookie('/user', user_email, opts);
 		res.cookie('/strava_id', strava_id, opts);
 
@@ -44,9 +46,17 @@ router.get("/", function(req, res){
 		}).catch(function(err){
 			res.set('Content-Type', 'text/plain');
 			res.status(400);
-			res.send('Bad email or password');
+			res.send('Bad email or password when requesting dashboard');
 		});
 	});
 });
+
+// router.get("/:id", function(req, res){
+//
+// 	knex('user').where('id', req.paras.id).first()
+// 	.then(function(result){
+//
+// 	})
+// })
 
 module.exports = router;

@@ -11,11 +11,23 @@ const boom = require('boom');
 
 // YOUR CODE HERE
 router.get('/', function(req, res, next){
-	if (req.cookies['/token'] === 'cookiemonster.something.somwhing'){
-		console.log(req.cookies)
-		res.json(true)
+	var stravaId = req.cookies['/strava_id'];
+	console.log(stravaId, 'staatttta');
+	if(stravaId.length > 2) {
+		knex('users').where('strava_id', stravaId).first()
+		.then(function(results){
+			if (results.strava_id === stravaId){
+				res.render('dashboard');
+			} else {
+				res.render('login');
+			}
+		}).catch(function(err){
+			res.set('Content-Type', 'text/plain');
+			res.status(400);
+			res.send('Bad email or password on longin 27');
+		})
 	} else {
-		res.json(false);
+		res.render('login');
 	}
 })
 
@@ -37,7 +49,7 @@ router.post('/', function(req, res, next){
 	.then(function(row){
 		//console.log(row)
 		if (!row) {
-			 throw boom.create(400, 'Bad email or password');
+			 throw boom.create(400, 'Bad email or password on line 53');
 		 }
 
 		 return bcrypt.compare(password, user.hashed_password);
@@ -58,7 +70,7 @@ router.post('/', function(req, res, next){
 
 	}).catch(bcrypt.MISMATCH_ERROR, function(){
 		//console.log('WRongggggggggggg')
-		throw boom.create(400, 'Bad email or password');
+		throw boom.create(400, 'Bad email or password on login 73');
 	})
 	.catch(function(err){
 		res.set('Content-Type', 'text/plain');
