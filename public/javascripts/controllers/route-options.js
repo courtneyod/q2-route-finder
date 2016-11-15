@@ -22,7 +22,7 @@ function init(){
     $.spin('false');
     var routeOptions = data.results;
     var friendlyRouteObjects = mapRoutesToFriendlyObjects(routeOptions);
-
+    console.log(friendlyRouteObjects, 'friendlyRouteObjects')
     geoCodeLatLong(friendlyRouteObjects.routeContainerObj);
 
     var centerLat = friendlyRouteObjects.routeContainerObj[0].first_lat;
@@ -198,9 +198,12 @@ function createClickEventForEachCard(eventName, element){
 
 function displayRouteOnMap(routeId){
   var routeDetailsPromise = getRouteDetails(routeId);
+  console.log(routeId, 'routeId')
+  console.log(routeDetailsPromise, 'routeDetailsPromise')
   routeDetailsPromise.done(function(data){
     createPathsObject(data.track_points)
     $('#graph').remove(); // this is my <canvas> element
+    window.track_points = (data.track_points)
     parseDataCanvas(data.track_points);
   });
 }

@@ -5,16 +5,37 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session')
 var bodyParser = require('body-parser');
+var passport = require('passport');
+LocalStrategy = require('passport-local').Strategy;
+var strava = require('strava-v3');
+
+require('dotenv').load();
 
 var index = require('./routes/index');
+var login = require('./routes/login');
+var favorites = require('./routes/favorites');
 var rides = require('./routes/rides');
+var auth = require('./routes/auth');
+var dashboard = require('./routes/dashboard');
+
 
 var app = express();
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
+
+
+
+// strava.athlete.get({},function(err,payload) {
+//     if(!err) {
+//         console.log(payload, 'here is courtney');
+//     }
+//     else {
+//         console.log(err);
+//     }
+// });
 
 // app.get('/', function(req, res){
 //   console.log('hi')
@@ -32,14 +53,74 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-//app.use('/', index);
+app.use('/', index);
 app.use('/rides', rides);
+app.use('/login', login);
+app.use('/favorites', favorites);
+app.use('/auth', auth);
+app.use('/dashboard', auth);
 
 //Update the cookie session secret to use the secret key in the JWT_SECRET environment variable.
 app.use(cookieSession({
   name: 'session',
-  secret: process.env.JWT_SECRET
+  keys: process.env.JWT_SECRET
 }));
+
+
+
+
+
+// app.use(passport.initialize());
+// app.use(passport.session());
+//
+// passport.serializeUser(function(user, done) {
+//   //later this will be where you selectively send to the browser an identifier for your user, like their primary key from the database, or their ID from linkedin
+//   done(null, user);
+// });
+//
+// passport.deserializeUser(function(obj, done) {
+//   //here is where you will go to the database and get the user each time from it's id, after you set up your db
+//
+//   done(null, obj);
+// });
+//
+//
+// passport.use(new LocalStrategy({
+//      "access_token":"b25135f8e0baad45ddb1ba7aff6d55c87ee0b730",
+//      "client_id":"14704",
+//      "client_secret" :"ceefef311a0817a60158711516becd3648f66941",
+//      "redirect_uri"  :"localhost:8000/dashboard"
+//
+// },
+// function(request, accessToken, refreshToken, profile, done) {
+//  knex('users').where({'email':profile.emails[0].value}).first()
+//  .then(function(user) {
+//    if(!user) {
+//      knex('users').insert({email: profile.emails[0].value, hashed_password:profile.password })
+//      .returning('*')
+//      .then(function(user) {
+//        delete user[0].hashed_password;
+//        delete user[0].created_at;
+//        delete user[0].updated_at;
+//
+//        console.log('Thank you for registering with Routekeeper!  New profile: ', user, "has been created.");
+//        return done(null, user[0]);
+//      }).catch(function(error){
+//        done(error, null);
+//      });
+//    }
+//    else {
+//      console.log('Thank you for attempting to register with RouteKeeper', user, "It looks like you have set up a profile already.");
+//      return done(null, user);
+//    }
+//  })
+//  .catch(function(error) {
+//    return done(error, null);
+//  });
+//
+// }));
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -52,11 +133,12 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = err
 
   // render the error page
   res.status(err.status || 500);
   res.send(err);
+  throw err
 });
 
 module.exports = app;
