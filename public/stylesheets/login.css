@@ -1,0 +1,42 @@
+#strava {
+	background-color: #4184f3;
+  border-color: #4184f3;
+}
+
+.strava-button {
+	text-decoration: none;
+	color: #fff;
+	text-shadow: none;
+	background-image: url('../images/strava_cirlce.png');
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+}
+ .strava {
+	 display: flex;
+   justify-content: center;
+   align-content: center;
+   flex-direction: column;
+	 width: 100%;
+ }
+
+.form-text{
+	text-shadow: none;
+	color: #333;
+	font-size: 12px;
+	line-height: 1.5em;
+  margin: 15px auto 0 auto;
+}
+
+/* ------------- login inputs -------------------*/
+.user-input-login {
+	box-sizing: border-box;
+	margin: 0 0 5px 0;
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+	font-size: 14px;
+	font-weight: 300;
+	border-radius: 3px;
+	min-height: 40px;
+	width: 100%;
+}
