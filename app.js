@@ -16,7 +16,10 @@ var login = require('./routes/login');
 var favorites = require('./routes/favorites');
 var rides = require('./routes/rides');
 var auth = require('./routes/auth');
+var users = require('./routes/users');
+var athlete = require('./routes/athlete');
 var dashboard = require('./routes/dashboard');
+var createAccount = require('./routes/create-account');
 
 
 var app = express();
@@ -36,7 +39,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 //takes a folder to look inside of
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', index);
@@ -44,7 +47,10 @@ app.use('/rides', rides);
 app.use('/login', login);
 app.use('/favorites', favorites);
 app.use('/auth', auth);
+app.use('/users', users);
 app.use('/dashboard', dashboard);
+app.use('/athlete', athlete);
+app.use('/create-account', createAccount);
 
 //Update the cookie session secret to use the secret key in the JWT_SECRET environment variable.
 app.use(cookieSession({

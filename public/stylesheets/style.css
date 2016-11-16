@@ -82,7 +82,7 @@ table {
 /* ----- =nav logo ----- */
 
 .logo{
-	background-image: url("../public/images/route-finder.png")
+	background-image: url("/public/images/route-finder.png")
 }
 
 .master-nav-head img {
@@ -93,15 +93,16 @@ table {
 }
 
 /* ----- =main container styling ----- */
-
-.main-container {
-  background-image: url("../public/images/marin.jpeg");
+.main-container-image {
+	background-image: url("/public/images/marin.jpeg");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   background-position: 100% 20%;
   height: 700px;
+}
+.main-container {
   margin-top: 45px;
 }
 

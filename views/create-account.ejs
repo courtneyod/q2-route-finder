@@ -21,51 +21,28 @@
     <div class="navbar-fixed">
         <nav class="master-nav-head">
             <div class="nav-wrapper">
-                <img class="nav-content" src="/public/images/route-finder.png" alt="" />
+                <img class="nav-content" src="../images/route-finder.png" alt="" />
                 <p class="nav-content nav-copy"><a class="nav-content" href="index.html">RouteFinder</a></p>
             </div>
         </nav>
     </div>
-    <main class="main-container main-container-image">
-        <div>
-            <p class="main-headline">
-                Plan Your Route
-            </p>
-        </div>
+    <main class="main-container">
         <div class="row form-container">
-            <form id="form" class="route-input" action="login" method="POST">
+            <form id="form" class="route-input" action="route-options.html" method="GET">
               <div class="input-wrapper">
-              <div class="strava btn-large" id="strava">
-                <a class="button strava-button" href="https://www.strava.com/oauth/authorize?client_id=14704&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fauth%2Fconfirm&response_type=code&scope=view_private%2Cwrite">
-                Sign in with Strava
-                </a>
-                </div>
               <p class="form-text">
-                  or sign up with your email address
+                  Would you like to create an account?
               </p>
                 <div class="input-field">
                     <fieldset class="user-inputs">
-                      <div class="row">
-                        <div class="login-divs">
-                            <label class="login-label" for="firstName"></label>
-                            <input class="user-input-login" type="text" placeholder="First Name" id="first-name" name="firstName" required />
-                        </div>
-                        <div class="login-divs">
-                            <label class="login-label" for="lastName"></label>
-                            <input class="user-input-login" type="text" placeholder="Last Name" id="last-name" name="lastName" required />
-                        </div>
-                      </div>
-                        <div class="login-divs">
-                          <label class="range-slider login-label" for="email"></label>
-                          <input class="user-input-login" type="email" placeholder="Email" id="email" name="email" required />
-                        </div>
+
                         <div class="login-divs">
                           <label class="range-slider login-label" for="password"></label>
-                          <input class="user-input-login" type="password" placeholder="Password" id="password" name="password" required />
+                          <input class="user-input-login" type="password" placeholder="password" id="password" name="Password" required />
                         </div>
                         <div class="login-divs">
-                          <label class="range-slider login-label" for="confirmPassword"></label>
-                          <input class="user-input-login" type="password" placeholder="Confirm Password" id="confirm-password" name="confirmPassword" required />
+                          <label class="range-slider login-label" for="confirm-password"></label>
+                          <input class="user-input-login" type="password" placeholder="password" id="confirm-password" name="Confirm password" required />
                         </div>
                     </fieldset>
                     </div>

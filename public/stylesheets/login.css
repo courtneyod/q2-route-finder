@@ -7,7 +7,7 @@
 	text-decoration: none;
 	color: #fff;
 	text-shadow: none;
-	background-image: url('../public/images/strava.gif');
+	background-image: url('/public/images/strava.gif');
 	background-size: 30px 40px;
 	background-repeat: no-repeat;
 	background-position: 10px center;
