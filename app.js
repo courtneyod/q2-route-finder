@@ -16,7 +16,10 @@ var login = require('./routes/login');
 var favorites = require('./routes/favorites');
 var rides = require('./routes/rides');
 var auth = require('./routes/auth');
+var users = require('./routes/users');
+var athlete = require('./routes/athlete');
 var dashboard = require('./routes/dashboard');
+var createAccount = require('./routes/create-account');
 
 
 var app = express();
@@ -26,31 +29,17 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
-
-
-// strava.athlete.get({},function(err,payload) {
-//     if(!err) {
-//         console.log(payload, 'here is courtney');
-//     }
-//     else {
-//         console.log(err);
-//     }
-// });
-
-// app.get('/', function(req, res){
-//   console.log('hi')
-//   res.sendFile('/views/index.html')
-// })
-// // app.get('/', express.static(path.join(__dirname, 'public/views/index.html')))
-// app.get('/explore', express.static(path.join(__dirname, 'public/views/route-options.html')))
-
+// set the view engine to ejs
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+// app.use('/', express.static(path.join(__dirname, 'public')))
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 //takes a folder to look inside of
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', index);
@@ -58,7 +47,10 @@ app.use('/rides', rides);
 app.use('/login', login);
 app.use('/favorites', favorites);
 app.use('/auth', auth);
-app.use('/dashboard', auth);
+app.use('/users', users);
+app.use('/dashboard', dashboard);
+app.use('/athlete', athlete);
+app.use('/create-account', createAccount);
 
 //Update the cookie session secret to use the secret key in the JWT_SECRET environment variable.
 app.use(cookieSession({
@@ -124,7 +116,7 @@ app.use(cookieSession({
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('No route matches the page');
   err.status = 404;
   next(err);
 });

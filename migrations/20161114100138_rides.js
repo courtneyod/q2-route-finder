@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
       table.float('last_lat').notNullable();
       table.float('first_lng').notNullable();
       table.float('last_lng').notNullable();
-      table.float('duration').notNullable();
+      table.string('duration').notNullable();
       table.string('city').notNullable().defaultTo('');
       table.string('state').notNullable().defaultTo('');
       table.integer('postal_code').notNullable().defaultTo(0);

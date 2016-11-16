@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../stylesheets/style.css" />
-    <link rel="stylesheet" href="../stylesheets/login.css" />
+    <link rel="stylesheet" href="/public/stylesheets/style.css" />
+    <link rel="stylesheet" href="/public/stylesheets/login.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRIiHf8ZLSzIhVTGQoedYNO7pM8UQD6dk&libraries=places"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.js" ></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="../javascripts/controllers/index.js" charset="utf-8"></script>
+    <script src="/public/javascripts/controllers/index.js" charset="utf-8"></script>
     <title>Route Finder</title>
 </head>
 
@@ -27,42 +27,21 @@
         </nav>
     </div>
     <main class="main-container">
-        <div>
-            <p class="main-headline">
-                Plan Your Route
-            </p>
-        </div>
         <div class="row form-container">
             <form id="form" class="route-input" action="route-options.html" method="GET">
               <div class="input-wrapper">
-              <div class="strava btn-large" id="strava">
-                <a class="button strava-button" href="https://www.strava.com/oauth/authorize?client_id=14704&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fdashboard&response_type=code&scope=view_private%2Cwrite">
-                Sign up with Strava
-                </a>
-                </div>
               <p class="form-text">
-                  or sign up with your email address
+                  Would you like to create an account?
               </p>
                 <div class="input-field">
                     <fieldset class="user-inputs">
-                        <div class="input-group">
-                            <label class="homepage-label" for="first-name"></label>
-                            <input class="user-input-login" type="text" placeholder="First Name" id="first-name" name="first-name" required />
-                        </div>
-                        <div class="input-group">
-                            <label class="homepage-label" for="last-name"></label>
-                            <input class="user-input-login" type="text" placeholder="Last Name" id="last-name" name="last-name" required />
-                        </div>
-                        <div class="input-group">
-                          <label class="range-slider homepage-label" for="email"></label>
-                          <input class="user-input-login" type="email" placeholder="Email" id="email" name="email" required />
-                        </div>
-                        <div class="input-group">
-                          <label class="range-slider homepage-label" for="password"></label>
+
+                        <div class="login-divs">
+                          <label class="range-slider login-label" for="password"></label>
                           <input class="user-input-login" type="password" placeholder="password" id="password" name="Password" required />
                         </div>
-                        <div class="input-group">
-                          <label class="range-slider homepage-label" for="confirm-password"></label>
+                        <div class="login-divs">
+                          <label class="range-slider login-label" for="confirm-password"></label>
                           <input class="user-input-login" type="password" placeholder="password" id="confirm-password" name="Confirm password" required />
                         </div>
                     </fieldset>
