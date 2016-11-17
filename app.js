@@ -23,6 +23,8 @@ var dashboard = require('./routes/dashboard');
 var createAccount = require('./routes/create-account');
 var socketsBackend = require('./routes/sockets-backend');
 var routeOptions = require('./routes/route-options');
+var encode = require('./routes/sockets-backend');
+var decode = require('./routes/sockets-backend');
 
 
 var app = express();
@@ -57,6 +59,8 @@ app.use('/athlete', athlete);
 app.use('/create-account', createAccount);
 app.use('/sockets-backend', socketsBackend);
 app.use('/route-options', routeOptions);
+app.use('/encode', encode);
+app.use('/decode', decode);
 
 //Update the cookie session secret to use the secret key in the JWT_SECRET environment variable.
 app.use(cookieSession({

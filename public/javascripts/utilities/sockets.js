@@ -101,13 +101,14 @@ $(document).ready(function(){
 
 function saveRide() {
   console.log("am I here?");
+	console.log("THIS IS CURRENT RIDE" + JSON.stringify(currentRidePairs))
   socket.close();
   const options = {
     contentType: 'application/json',
     data: JSON.stringify(currentRidePairs),
     dataType: 'json',
     type: 'POST',
-    url: '/rides'
+    url: '/sockets-backend'
   };
 
   $.ajax(options)

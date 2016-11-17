@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments('id').primary();
       table.string('location').notNullable().defaultTo('');
       table.string('ride_name').defaultTo('');
-      table.integer('ride_with_gps_id').notNullable().unique();
+      table.integer('ride_with_gps_id').unique();
       table.string('city_state').notNullable().defaultTo('');
       table.float('distance').notNullable();
       table.string('encoded_polyline').defaultTo('');
