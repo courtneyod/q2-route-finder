@@ -46,6 +46,21 @@ table {
 
 /* ----- =nav bar ----- */
 
+/*.nav-bar-links {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}*/
+
+.nav-bar-ul {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.nav-bar-ul li:hover {
+	color: #b03501;
+}
 .nav-bar-fixed {
 	height: 40px;
 }

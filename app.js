@@ -11,8 +11,9 @@ var strava = require('strava-v3');
 
 require('dotenv').load();
 
-var index = require('./routes/index');
+var findRide = require('./routes/find-ride');
 var login = require('./routes/login');
+var logout = require('./routes/logout');
 var favorites = require('./routes/favorites');
 var rides = require('./routes/rides');
 var auth = require('./routes/auth');
@@ -21,6 +22,7 @@ var athlete = require('./routes/athlete');
 var dashboard = require('./routes/dashboard');
 var createAccount = require('./routes/create-account');
 var socketsBackend = require('./routes/sockets-backend');
+var routeOptions = require('./routes/route-options');
 
 
 var app = express();
@@ -43,9 +45,10 @@ app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 
-app.use('/', index);
+app.use('/find-ride', findRide);
 app.use('/rides', rides);
 app.use('/login', login);
+app.use('/logout', logout);
 app.use('/favorites', favorites);
 app.use('/auth', auth);
 app.use('/users', users);
@@ -53,6 +56,7 @@ app.use('/dashboard', dashboard);
 app.use('/athlete', athlete);
 app.use('/create-account', createAccount);
 app.use('/sockets-backend', socketsBackend);
+app.use('/route-options', routeOptions);
 
 //Update the cookie session secret to use the secret key in the JWT_SECRET environment variable.
 app.use(cookieSession({

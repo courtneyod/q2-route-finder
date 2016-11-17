@@ -76,14 +76,11 @@ router.post('/', function(req, res, next){
 });
 
 router.delete('/', (req, res, next) => {
+	res.clearCookie("/login_token");
+	res.clearCookie("/user");
 
-	var opts = {
-		path: '/',
-    httpOnly: true
-  };
-  res.clearCookie('/token','cookiemonster.something.somwhing', opts);
-	res.json(true)
-  res.status(200);
+	res.render('login');
+  //res.status(200);
 });
 
 module.exports = router;

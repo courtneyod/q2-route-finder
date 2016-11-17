@@ -22,7 +22,7 @@ function init(){
     $.spin('false');
     var routeOptions = data.results;
     var friendlyRouteObjects = mapRoutesToFriendlyObjects(routeOptions);
-    console.log(friendlyRouteObjects, 'friendlyRouteObjects')
+  //  console.log(friendlyRouteObjects, 'friendlyRouteObjects')
     geoCodeLatLong(friendlyRouteObjects.routeContainerObj);
 
     var centerLat = friendlyRouteObjects.routeContainerObj[0].first_lat;
@@ -35,6 +35,7 @@ function init(){
 
 function getQueryParams(){
   let url = window.location.href;
+  url = decodeURI(url)
   let vars = {};
   var hashes = url.split("?")[1].split('&');
 
@@ -42,19 +43,21 @@ function getQueryParams(){
     let params=hashes[i].split("=");
     vars[params[0]] = params[1];
     }
-
+  //console.log(vars, 'here is vars')
   return sortRangeSliders(vars)
 }
 
 function sortRangeSliders(paramObj){
+  //console.log(paramObj, 'paramObj')
   let distance = paramObj.distancerange;
-  let keyValues = distance.split('+-+');
+  //console.log(distance)
+  let keyValues = distance.split(' - ');
   paramObj.mindistance = keyValues[0];
   let keyValuesMax = keyValues[1].split('+');
   paramObj.maxdistance = keyValuesMax[0];
 
   let elevation = paramObj.elevationrange;
-  let keyValuesElevation = elevation.split('+-+');
+  let keyValuesElevation = elevation.split(' - ');
   paramObj.minelevation = keyValuesElevation[0];
   keyValuesMax = keyValuesElevation[1].split('+');
   paramObj.maxelevation = keyValuesMax[0];
@@ -82,12 +85,14 @@ function addValuesToInput(location, mileRange, maxDistance, minDistance, elevGai
 var mapRoutesToFriendlyObjects = function(routeOptions) {
   var routeIdArray = [];
   var routeContainerObj = [];
+  //console.log(routeOptions)
 
   for (var i = 0; i < routeOptions.length; i++) {
     if(routeOptions[i].type === "trip"){
       routeIdArray.push(routeOptions[i].trip.route_id);
 
       routeContainerObj.push({
+        'name': routeOptions[i].trip.name,
         "ids": routeOptions[i].trip.route_id,
         "cityAndState": undefined,
         "distance": routeOptions[i].trip.distance,
@@ -107,6 +112,7 @@ var mapRoutesToFriendlyObjects = function(routeOptions) {
       routeIdArray.push(routeOptions[i].route.id);
 
       routeContainerObj.push({
+        'name': routeOptions[i].route.name,
         "ids": routeOptions[i].route.id,
         "cityAndState": undefined,
         "distance": routeOptions[i].route.distance,
@@ -153,7 +159,9 @@ function renderRideOptions(route, routeContainerObjLength){
   var card = document.createElement("div");
   card.className = "result-card";
   card.id = route.ids;
-  var headline = document.createElement("h3");
+  var rideName = document.createElement("h3");
+  rideName.className = "ride-name";
+  var headline = document.createElement("h2");
   headline.className = "city-state";
   var cardMile = document.createElement("div");
   cardMile.className = "card-mile card-details";
@@ -162,8 +170,18 @@ function renderRideOptions(route, routeContainerObjLength){
   var duration = document.createElement("div");
   duration.className = "card-duration card-details";
 
+  var favorite = document.createElement("button");
+  favorite.className = "favorite";
+  favorite.setAttribute("ride_id", route.ids);
+
   rideDetails.appendChild(col);
   col.appendChild(card);
+
+  favorite.innerHTML = 'Save to Favs';
+  card.appendChild(favorite);
+
+  rideName.innerHTML = route.name;
+  card.appendChild(rideName);
 
   headline.innerHTML = route.cityAndState;
   card.appendChild(headline);
@@ -171,7 +189,9 @@ function renderRideOptions(route, routeContainerObjLength){
   cardMile.innerHTML = ((route.distance)*(0.000621)).toFixed(1) + " mi";
   card.appendChild(cardMile);
 
-  cardElevGain.innerHTML = ((route.elevation_gain)*(3.2808399)).toFixed(1) + " ft";
+  var elevationGain = ((route.elevation_gain)*(3.2808399)).toFixed(1);
+  elevationGain = commaSeparateNumber(elevationGain);
+  cardElevGain.innerHTML = (elevationGain) + " ft";
   card.appendChild(cardElevGain);
 
   if(route.duration !== undefined && route.duration !== null){
@@ -180,7 +200,15 @@ function renderRideOptions(route, routeContainerObjLength){
   }
 
   createClickEventForEachCard('click', card);
+  createClickEventForFavButton('click', favorite, route);
 }
+
+function commaSeparateNumber(val){
+    while (/(\d+)(\d{3})/.test(val.toString())){
+      val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
+    }
+    return val;
+  }
 
 /* Create click event for each route card. The click event will call google polylines to draw the route */
 function createClickEventForEachCard(eventName, element){
@@ -198,8 +226,8 @@ function createClickEventForEachCard(eventName, element){
 
 function displayRouteOnMap(routeId){
   var routeDetailsPromise = getRouteDetails(routeId);
-  console.log(routeId, 'routeId')
-  console.log(routeDetailsPromise, 'routeDetailsPromise')
+//  console.log(routeId, 'routeId')
+//  console.log(routeDetailsPromise, 'routeDetailsPromise')
   routeDetailsPromise.done(function(data){
     createPathsObject(data.track_points)
     $('#graph').remove(); // this is my <canvas> element
@@ -250,4 +278,34 @@ function latLongObject(routeObject){
     });
   }
   return locations;
+}
+
+
+
+// ===========================SAVE FAVORITE RIDE =================================
+
+function createClickEventForFavButton(eventName, element, route){
+  element.addEventListener(eventName, function(event) {
+    var elementId = event.currentTarget;
+    elementId = element.getAttribute('ride_id');
+    console.log(typeof elementId)
+
+    const options = {
+    contentType: 'application/json',
+    data: JSON.stringify(route),
+    dataType: 'json',
+    type: 'POST',
+    url: '/favorites'
+  };
+
+  $.ajax(options)
+    .done(() => {
+      $('.favorites').text('Saved')
+    })
+    .fail(() => {
+      console.log('did not work')
+    });
+
+
+  });
 }

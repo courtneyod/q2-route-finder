@@ -174,7 +174,33 @@ table {
   font-weight: 200;
 }
 
+/*================ SAVE BUTTON ====================*/
+.favorite {
+	padding: 1px 8px;
+    font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #FC4C02;
+  border: none;
+	border-radius: 3px;
+	box-shadow: 0 4px #999;
+	float: right;
+	margin: 10px -18px 0 0;
+}
+
+.favorite:hover {background-color: #972e01}
+
+.favorite:active {
+  background-color: #972e01;
+  box-shadow: 0 3px #666;
+  transform: translateY(2px);
+}
+
+
 /* ----- Card for individual Rides ----- */
+
 
 .ride-details {
 	overflow-x: auto;
@@ -188,8 +214,14 @@ table {
 }
 
 .city-state {
-  padding: 10px 0;
+  padding: 0 0 5px 0;
 	line-height: 22px;
+	font-weight: 300;
+	font-size: 14px;
+}
+
+.ride-name {
+	padding: 10px 0;
 }
 
 .card-details {

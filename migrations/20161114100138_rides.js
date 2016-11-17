@@ -3,16 +3,18 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('rides', function(table){
       table.increments('id').primary();
       table.string('location').notNullable().defaultTo('');
+      table.string('ride_name').defaultTo('');
       table.integer('ride_with_gps_id').notNullable().unique();
       table.string('city_state').notNullable().defaultTo('');
       table.float('distance').notNullable();
+      table.string('encoded_polyline').defaultTo('');
       table.float('elevation_gain').notNullable();
       table.float('elevation_loss').notNullable();
       table.float('first_lat').notNullable();
-      table.float('last_lat').notNullable();
+      table.float('last_lat');
       table.float('first_lng').notNullable();
-      table.float('last_lng').notNullable();
-      table.string('duration').notNullable();
+      table.float('last_lng');
+      table.string('duration');
       table.string('city').notNullable().defaultTo('');
       table.string('state').notNullable().defaultTo('');
       table.integer('postal_code').notNullable().defaultTo(0);

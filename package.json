@@ -29,6 +29,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "pg": "^6.1.0",
+    "querystring": "^0.2.0",
     "serve-favicon": "~2.3.0",
     "socket.io": "^1.5.1",
     "strava-v3": "^1.12.1",

@@ -14,6 +14,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
   <script src="/public/javascripts/utilities/spinner.js" type="text/javascript"></script>
   <script src="/public/javascripts/controllers/index.js" charset="utf-8"></script>
+  <script src="/public/javascripts/controllers/navigation.js" charset="utf-8"></script>
   <script src="/public/javascripts/controllers/canvas.js" charset="utf-8"></script>
   <title>Route Finder</title>
 </head>
@@ -23,6 +24,13 @@
       <div class="nav-wrapper">
           <img class="nav-content" src="/public/images/route-finder.png" alt="" />
           <p class="nav-content nav-copy" ><a class="nav-content" href="index.html">RouteFinder</a></p>
+      </div>
+      <div class="nav-wrapper nav-bar-links">
+        <ul class="nav-bar-ul">
+          <li id="dashboard">Dashboard</li>
+          <li id="record-ride">Record Ride</li>
+          <li id="logout">Log Out</li>
+        </ul>
       </div>
     </nav>
   </div>
@@ -62,7 +70,7 @@
         </label>
         <div class="button button-route-options">
           <button class="btn-small" id="search-button" type="submit" name="action">
-          <img class="button-img" src="../images/Search_Dark.png" alt="">
+          <img class="button-img" src="/public/images/Search_Dark.png" alt="">
         </button>
         </div>
       </form>
@@ -97,6 +105,7 @@
     </footer>
   </main>
   <script src="/public/javascripts/utilities/ride-with-gps-api.js" charset="utf-8"></script>
+  <script src="/public/javascripts/controllers/navigation.js" charset="utf-8"></script>
   <script src="/public/javascripts/utilities/google-api.js" charset="utf-8"></script>
   <script src="/public/javascripts/utilities/google-maps.js" charset="utf-8"></script>
   <script src="/public/javascripts/controllers/route-options.js" charset="utf-8"></script>
