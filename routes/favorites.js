@@ -96,28 +96,56 @@ router.get('/', function(req, res, next){
 // });
 
 router.post('/', function(req, res, next){
-	//console.log(req.body, 'ksdfkdj')
-	knex('favorite_rides').insert({'ride_id': req.body.ride_id, 'user_id': req.body.user_id}).returning('*')
-	.then(function(rows){
+	//console.log(req.body, 'did you save it? ')
+	// { name: 'To Golden Gate Bridge',
+  // ids: 3576164,
+  // cityAndState: '2201-2223 Hastings Dr, Belmont',
+  // distance: 80559.1,
+  // elevation_gain: 340.377,
+  // elevation_loss: 395.421,
+  // first_lat: 37.5093,
+  // last_lat: null,
+  // first_lng: -122.29606999999999,
+  // last_lng: null,
+  // duration: null }
 
-		return knex('favorite_rides')
-		.join('users', 'users.id', '=', 'favorite_rides.user_id')
-		.join('rides', 'rides.id', '=', 'favorite_rides.ride_id')
-		.select('rides.city_state', 'rides.duration', 'rides.distance', 'rides.elevation_gain', 'rides.elevation_loss').where('ride_id', req.body.ride_id);
+	knex('rides').insert({
+		'ride_with_gps_id': req.body.ids,
+		'city_state': req.body.cityAndState,
+		'distance': req.body.distance,
+		'elevation_gain': req.body.elevation_gain,
+		'elevation_loss': req.body.elevation_loss,
+		'first_lat': req.body.first_lat,
+		'last_lat': req.body.last_lat,
+		'first_lng': req.body.first_lng,
+		'last_lng': req.body.last_lng,
+		'duration': req.body.duration,
+	}).returning('*')
+	.then(function (rows){
+		console.log(rows, 'hi there')
+		console.log(req.cookies['/user'], 'me')
+		var rideId = rows[0].id
+		var email = req.cookies['/user']
 
-	}).then(function(result){
-		//console.log(row[0], "court")
+		knex('users').where({email: email}).returning('*')
+		.then(function(results){
+			console.log(results, 'this is the 3rd knex post')
 
-		if(req.cookies['/token'] === 'cookiemonster.something.somwhing'){
-			res.json(result)
-		} else {
-			res.status(401);
-			res.set('Content-Type', 'text/plain');
-			res.send('Unauthorized');
-		}
+			knex('favorite_rides').insert({'ride_id': rideId, 'user_id': results[0].id}).returning('*')
+			.then(function(rows){
+				console.log(rows, 'yes you did it!!!!')
+
+			}).catch(function(err){
+				console.log(err, 'insert into favortes error')
+				res.status(401);
+				res.set('Content-Type', 'text/plain');
+				res.send('Unauthorized');
+			});
+		})
 
 
 	}).catch(function(err){
+		console.log(err)
 		res.status(401);
 		res.set('Content-Type', 'text/plain');
 		res.send('Unauthorized');

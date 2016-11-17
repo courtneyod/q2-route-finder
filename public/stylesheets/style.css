@@ -46,6 +46,21 @@ table {
 
 /* ----- =nav bar ----- */
 
+/*.nav-bar-links {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}*/
+
+.nav-bar-ul {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.nav-bar-ul li:hover {
+	color: #b03501;
+}
 .nav-bar-fixed {
 	height: 40px;
 }
@@ -63,7 +78,6 @@ table {
   color: #FC4C02;
   background-color: #dfdfdf;
   width: 100%;
-  opacity: 0.8;
   filter: alpha(opacity=50);
 }
 
