@@ -10,7 +10,6 @@ router.get('/token_exchange', function (req, res){
 	var code = strava.oauth.getRequestAccessURL({scope:"view_private,write"})
 	console.log(code);
 	if(code){
-		console.log("Now I'm here")
 		strava.oauth.getToken(code,function(err,payload) {
 			if(!err){
 				console.log('Got Token', payload);
