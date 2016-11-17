@@ -76,7 +76,7 @@ const getYearStatsTable = function(year) {
 	//var year = new Date(currentDate.getTime() - (60*60*24*year*1000));
 
 	if(year === '2016'){
-		upperRange = currentDate
+		upperRange = '2016-12-31'
 		lowerRange = '2016-01-01'
 	} else if (year === '2015'){
 		upperRange = '2015-12-31'
@@ -99,8 +99,9 @@ const getYearStatsTable = function(year) {
 
 	for(var i = 0; i < results.length; i ++){
 		var rideDate = (results[i].start_date).split("T")[0]
+    console.log('ridedate', rideDate, 'upperRange', upperRange, 'lowerRange', lowerRange)
 		//console.log(rideDate)
-		if (results[i].start_date < upperRange && results[i].start_date > lowerRange){
+		if (rideDate < upperRange && rideDate > lowerRange){
 				yearDistance += results[i].distance;
 				yearDuration += results[i].moving_time;
 				yearElevationGain += results[i].total_elevation_gain;
@@ -145,6 +146,26 @@ const renderUser = function(results) {
 const renderStravaActivity = function(results) {
 	const activityFeed = $('#activity-feed');
 
+  if(results < 1){
+    var addStravaContainer = $('<div>').addClass('add-strava-container');
+    var addStravaText = $('<h3>').addClass('add-strava-text');
+    addStravaText.text('Sign in through your Strava account and get your recent rides here');
+
+    var inputWrapper = $('<div>').addClass('input-wrapper');
+    var stravaBtnWrapper = $('<div>').addClass('strava-btn-wrapper');
+    var stravaBtn = $('<a>').addClass('strava-btn');
+
+    stravaBtn.attr("href", "https://www.strava.com/oauth/authorize?client_id=14704&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fauth%2Fconfirm&response_type=code&scope=view_private%2Cwrite");
+    stravaBtn.text('Sign in with Strava');
+
+    activityFeed.append(addStravaContainer);
+    addStravaContainer.append(addStravaText);
+    addStravaContainer.append(inputWrapper);
+    inputWrapper.append(stravaBtnWrapper);
+    stravaBtnWrapper.append(stravaBtn);
+
+  }
+
 	console.log(results, 'we have the results');
 	var length = 10;
 	if (results.length < 10) {
@@ -165,14 +186,14 @@ const renderStravaActivity = function(results) {
 		var entryElevation = $('<li>').addClass('entry-elevation');
 
 		var social = $('<div>').addClass('social');
-		var btnGroup = $('<div>').addClass('btn-group');
-		var btnKudo = $('<button>').addClass('btn-kudo');
-		var iconKudo = $('<span>').addClass('icon-kudo');
-		var countKudos = $('<span>').addClass('count-kudos');
+		// var btnGroup = $('<div>').addClass('btn-group');
+		// var btnKudo = $('<button>').addClass('btn-kudo');
+		// var iconKudo = $('<span>').addClass('icon-kudo');
+		// var countKudos = $('<span>').addClass('count-kudos');
 
-		var btnComment = $('<button>').addClass('btn-comment');
-		var iconComment = $('<span>').addClass('icon-comment');
-		var countComments = $('<span>').addClass('count-comments');
+		// var btnComment = $('<button>').addClass('btn-comment');
+		// var iconComment = $('<span>').addClass('icon-comment');
+		// var countComments = $('<span>').addClass('count-comments');
 
 		var date = convertDate(results[i].start_date_local);
 		day.text(date);
@@ -180,12 +201,12 @@ const renderStravaActivity = function(results) {
 		activityRideImage.attr("src","http://i.imgur.com/FcSaIeK.png");
 		activityHeadline.text(results[i].name + ', ' + results[i].location_city + ' ' + results[i].location_state);
 
-		btnKudo.attr("title","Give Kudos");
-		iconKudo.text("Kudos");
-		countKudos.attr("data-kudo-count","1");
-		countKudos.text("0");
-		btnComment.attr("title","Comment");
-		iconComment.text("0");
+		// btnKudo.attr("title","Give Kudos");
+		// iconKudo.text("Kudos");
+		// countKudos.attr("data-kudo-count","1");
+		// countKudos.text("0");
+		// btnComment.attr("title","Comment");
+		// iconComment.text("0");
 
 		var time = secondsToHms(results[i].moving_time);
 		entryDuration.text(time);
@@ -199,7 +220,7 @@ const renderStravaActivity = function(results) {
 		activityDetails.append(activityProfileImage);
 		activityDetails.append(activityEntry);
 		activityDetails.append(activityRideImage);
-    activityDetails.append(social);
+    // activityDetails.append(social);
 
 		activityEntry.append(activityHeadline);
 		activityEntry.append(activitySpecs);
@@ -207,15 +228,15 @@ const renderStravaActivity = function(results) {
 		activitySpecs.append(entryDuration);
 		activitySpecs.append(entryDistance);
 		activitySpecs.append(entryElevation);
-
-		social.append(btnGroup);
-		btnGroup.append(btnKudo);
-		btnKudo.append(iconKudo);
-		btnKudo.append(countKudos);
-
-		social.append(btnComment);
-		btnComment.append(iconComment);
-		btnComment.append(countComments);
+    //
+		// social.append(btnGroup);
+		// btnGroup.append(btnKudo);
+		// btnKudo.append(iconKudo);
+		// btnKudo.append(countKudos);
+    //
+		// social.append(btnComment);
+		// btnComment.append(iconComment);
+		// btnComment.append(countComments);
 	}
 	// $('#first-name').text(results.first_name + " " + results.last_name);
 	// $('#location').text(results.location);
@@ -227,8 +248,29 @@ const renderStravaActivity = function(results) {
 // ====================== Render Favorite Rides ======================================
 
 const renderFavoriteActivity = function(results) {
+  const activityFeed = $('#favorite-feed');
+
+  if(results < 1){
+    var addStravaContainer = $('<div>').addClass('add-strava-container');
+    var addStravaText = $('<h3>').addClass('add-strava-text');
+    addStravaText.text('Explore new rides and save it to your dashboard.');
+
+    var inputWrapper = $('<div>').addClass('input-wrapper');
+    var stravaBtnWrapper = $('<div>').addClass('strava-btn-wrapper');
+    var stravaBtn = $('<a>').addClass('strava-btn');
+
+    stravaBtn.attr("href", "/route-finder");
+    stravaBtn.text('Explore Routes!');
+
+
+    activityFeed.append(addStravaContainer);
+    addStravaContainer.append(addStravaText);
+    addStravaContainer.append(inputWrapper);
+    inputWrapper.append(stravaBtnWrapper);
+    stravaBtnWrapper.append(stravaBtn);
+
+  }
   //console.log('here we are in fav function')
-	const activityFeed = $('#favorite-feed');
 
 	//console.log(results, 'we have the results');
 	// var length = 10;
@@ -253,11 +295,12 @@ const renderFavoriteActivity = function(results) {
 		// var btnGroup = $('<div>').addClass('btn-group');
 		// var btnFav = $('<button>').addClass('btn-fav');
     var removeFavBtn = $('<button>').addClass('remove-fav-btn');
-    removeFavBtn.text('Remove from Favs')
+    removeFavBtn.text('Remove from Favs');
+    removeFavBtn.attr('ride-id', results[i].id);
 
     var name = results[i].ride_name
     if(results[i].ride_name === ''){
-      name = 'favorite bike ride'
+      name = 'favorite bike ride';
     }
     day.text(name);
 		activityProfileImage.attr("src","http://manayunk.com/assets/content/images/DSR/DSR_BikeIcon_Circle.jpg");
@@ -275,11 +318,11 @@ const renderFavoriteActivity = function(results) {
 		entryDistance.text((results[i].distance/(1760)).toFixed(1) + 'mi');
 		entryElevation.text(results[i].elevation_gain + 'ft');
 
+    activityFeed.append(social);
     activityFeed.append(dateActivity);
 		dateActivity.append(day);
 
 		activityFeed.append(activityDetails);
-		activityDetails.append(social);
 
 		activityDetails.append(activityProfileImage);
 		activityDetails.append(activityEntry);
@@ -293,6 +336,8 @@ const renderFavoriteActivity = function(results) {
 		activitySpecs.append(entryElevation);
 
 		social.append(removeFavBtn);
+
+    createClickEventForRemoveFav('click', removeFavBtn, results[i].id, dateActivity, activityDetails);
 		//btnGroup.append(btnFav);
 
 		// social.append(btnComment);
@@ -356,16 +401,16 @@ function dropDownListener(){
 				//console.log(typeof event.target.innerHTML)
 				if(event.target.innerHTML === "2015"){
 					getYearStatsTable('2015')
-					$('.selection').text('2015')
+					$('.selection').text('2015' + '∨')
 				} else if (event.target.innerHTML === "2014") {
 					getYearStatsTable('2014')
-					$('.selection').text('2014')
+					$('.selection').text('2014'  + '∨')
 				} else if (event.target.innerHTML === "2013"){
 					getYearStatsTable('2013')
-					$('.selection').text('2013')
+					$('.selection').text('2013' + '∨')
 				} else {
 					getYearStatsTable('2016')
-					$('.selection').text('2016')
+					$('.selection').text('2016'  + '∨')
 				}
 		}, false);
 	}
@@ -401,3 +446,39 @@ $( ".switch" ).click(function() {
 
   });
 });
+
+
+
+
+// ===========================REMOVE FAVORITE RIDE =================================
+
+function createClickEventForRemoveFav(eventName, element, route, removeElOne, removeElTwo){
+  //console.log(element[0])
+  console.log(route, 'route')
+  element[0].addEventListener(eventName, function(event) {
+    var elementId = event.currentTarget;
+    elementId = element[0].getAttribute('ride-id');
+    //console.log(typeof elementId)
+
+    const options = {
+    dataType: 'json',
+    type: 'DELETE',
+    url: `/favorites/${route}`
+  };
+
+  $.ajax(options)
+    .done((res) => {
+      console.log(res)
+      removeElOne[0].remove()
+      removeElTwo[0].remove()
+      element[0].remove()
+      //$('.favorites').text('Saved')
+    })
+    .fail((err) => {
+      console.log(err)
+      console.log('did not work')
+    });
+
+
+  });
+}

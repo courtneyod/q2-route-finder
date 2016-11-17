@@ -46,51 +46,32 @@ table {
 
 /* ----- =nav bar ----- */
 
-/*.nav-bar-links {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-}*/
-
-.nav-bar-ul {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
+.nav-list {
+	border-right: 1px solid #bbb;
+	color: #666;
+	float: right;
+	padding: 14px 16px;
+	text-align: center;
+	display: block;
 }
 
-.nav-bar-ul li:hover {
-	color: #b03501;
-}
-.nav-bar-fixed {
-	height: 40px;
+
+.nav-list:hover:not(.nav-list-first) {
+    background-color: #FC4C02;
+		color: white;
 }
 
-.master-nav-head {
-	vertical-align: middle;
-	display: table-cell;
-  padding: 10px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  width: 100%;
-	line-height: 20px;
-  color: #FC4C02;
-  background-color: #dfdfdf;
-  width: 100%;
-  filter: alpha(opacity=50);
+.nav-list:first-child {
+	border-right: none;
+	float: left;
 }
 
 .nav-wrapper {
-	vertical-align: middle;
-  display: table-cell;
-}
-
-.nav-content {
-  display: inline-block;
-  font-size: 116%;
-	text-decoration: none;
-	color: #FC4C02;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #dfdfdf;
 }
 
 /* ----- =nav logo ----- */
@@ -115,9 +96,6 @@ table {
   background-size: cover;
   background-position: 100% 20%;
   height: 700px;
-}
-.main-container {
-  margin-top: 45px;
 }
 
 /* ----- =form styling ----- */
@@ -259,8 +237,13 @@ background-color: #e34402;
 	padding: 40px 0;
 }
 
-.details-image {
-	background-image: url("../images/ride-example.png");
+.details-image-route {
+	background-image: url("/public/images/ride-example.png");
+	background-position: center;
+	height: 450px;
+}
+.details-image-dashboard {
+	background-image: url("/public/images/dashboard.png");
 	background-position: center;
 	height: 450px;
 }

@@ -152,24 +152,20 @@ router.post('/', function(req, res, next){
 	});
 });
 
-router.delete('/', function(req, res, next){
-	//console.log(req.body, 'ksdfkdj')
-	knex('favorites').where('ride_id', req.body.ride_id).del().first()
+router.delete('/:id', function(req, res, next){
+
+	//console.log(req.params.id, 'delete')
+	knex('favorite_rides').where('ride_id', req.params.id).first().del()
 	.then(function(rows){
+		console.log('hereeeeeee')
 		delete rows.id
 		delete rows.created_at
 		delete rows.updated_at
 
-		if(req.cookies['/token'] === 'cookiemonster.something.somwhing'){
-			res.json(rows)
-		} else {
-			res.status(401);
-			res.set('Content-Type', 'text/plain');
-			res.send('Unauthorized');
-		}
-
+		res.json(rows)
 
 	}).catch(function(err){
+		console.log(err)
 		res.status(401);
 		res.set('Content-Type', 'text/plain');
 		res.send('Unauthorized');
