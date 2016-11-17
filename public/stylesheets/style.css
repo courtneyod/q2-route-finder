@@ -63,7 +63,6 @@ table {
   color: #FC4C02;
   background-color: #dfdfdf;
   width: 100%;
-  opacity: 0.8;
   filter: alpha(opacity=50);
 }
 
@@ -77,6 +76,17 @@ table {
   font-size: 116%;
 	text-decoration: none;
 	color: #FC4C02;
+}
+
+/*.route-saver {
+	display: inline-block;
+	text-align: center;
+}*/
+
+.nav-float {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
 }
 
 /* ----- =nav logo ----- */
@@ -104,6 +114,10 @@ table {
 }
 .main-container {
   margin-top: 45px;
+}
+
+.current-route {
+
 }
 
 /* ----- =form styling ----- */
