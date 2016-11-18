@@ -21,7 +21,7 @@ module.exports = {
 
   production: {
     client: 'postgresql',
-    connection: 'postgres://localhost/route_finder_dev',
+    connection: process.env.DATABASE_URL,
     pool: {
       min: 1,
       max: 1
