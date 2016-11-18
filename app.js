@@ -3,7 +3,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
-const cookieSession = require('cookie-session')
+const cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 LocalStrategy = require('passport-local').Strategy;
@@ -21,7 +21,10 @@ var users = require('./routes/users');
 var athlete = require('./routes/athlete');
 var dashboard = require('./routes/dashboard');
 var createAccount = require('./routes/create-account');
+var socketsBackend = require('./routes/sockets-backend');
 var routeOptions = require('./routes/route-options');
+var encode = require('./routes/sockets-backend');
+var decode = require('./routes/sockets-backend');
 
 
 var app = express();
@@ -54,7 +57,10 @@ app.use('/users', users);
 app.use('/dashboard', dashboard);
 app.use('/athlete', athlete);
 app.use('/create-account', createAccount);
+app.use('/sockets-backend', socketsBackend);
 app.use('/route-options', routeOptions);
+app.use('/encode', encode);
+app.use('/decode', decode);
 
 //Update the cookie session secret to use the secret key in the JWT_SECRET environment variable.
 app.use(cookieSession({
@@ -129,12 +135,12 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = err
+  res.locals.error = err;
 
   // render the error page
   res.status(err.status || 500);
   res.send(err);
-  throw err
+  throw err;
 });
 
 module.exports = app;

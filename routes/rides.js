@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var knex = require('../knex');
 /* GET all of the rides in db. */
 router.get('/', function(req, res, next) {
   knex('rides').orderBy('city_state', 'asc')
@@ -34,16 +34,18 @@ router.get('/:id', function(req, res, next){
 
 /* Add a new ride to the db. */
 router.post('/', function(req, res, next){
-
+  console.log('in the post')
+  console.log(req.body);
   knex('rides').insert(req.body).returning(['city_state', 'distance', 'duration', 'elevation_gain', 'elevation_loss', 'first_lat', 'first_lng', 'last_lat', 'last_lng', 'ride_with_gps_id'])
   .then(function(results){
 
     if(results){
       res.json(results[0]);
-    } else{
+    } else {
       throw new Error('error with getting rides');
     }
   }).catch(function(err){
+    console.log(err);
     res.set('Content-Type', 'text/plain');
 		res.status(404);
 		res.send('Not Found');
