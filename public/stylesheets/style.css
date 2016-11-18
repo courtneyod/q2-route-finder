@@ -85,6 +85,17 @@ table {
 	justify-content: flex-start;
 }
 
+/*.route-saver {
+	display: inline-block;
+	text-align: center;
+}*/
+
+.nav-float {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+
 /* ----- =nav logo ----- */
 
 .logo{
@@ -107,6 +118,10 @@ table {
   background-size: cover;
   background-position: 100% 20%;
   height: 700px;
+}
+
+.current-route {
+
 }
 
 .current-route {
