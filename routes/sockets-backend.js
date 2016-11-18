@@ -28,8 +28,22 @@ router.post('/', function(req, res){
 	// console.log("this is reqbody: " + util.inspect(req.body));
 	// console.log('THIS IS THE ENCODED POLYLINE: ' + util.inspect(encodedPolyline));
 	// console.log("this is the decoded polyline: " + util.inspect(decodedPolyline));
-	knex('rides').insert({'location': "SF", 'distance': 0, 'encoded_polyline': encodedPolyline, 'elevation_gain': 0, 'elevation_loss': 0, 'first_lat': 0, 'last_lat': 0, 'first_lng': 0, 'last_lng': 0, 'city': 'SF', 'state': 'CA', 'postal_code': 94103}).returning(['encoded_polyline'])
+	knex('rides').insert({
+			'location': "SF",
+			'distance': 0,
+			'ride_name': 'Recorded through our sockets!',
+			'encoded_polyline': encodedPolyline,
+			'elevation_gain': 0,
+			'elevation_loss': 0,
+			'first_lat': 0,
+			'last_lat': 0,
+			'first_lng': 0,
+			'last_lng': 0,
+			'city': 'San Francisco',
+			'state': 'CA',
+			'postal_code': 94103}).returning('*')
 	.then(function(results){
+		//console.log(results[0])
 
 	if(results){
 		res.json(results[0]);

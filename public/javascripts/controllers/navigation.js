@@ -17,7 +17,7 @@ $('#logout').click((event) => {
 
 $('#record-ride').click((event) => {
 		//event.preventDefault();
-		$(location).attr('href', '/record')
+		$(location).attr('href', '/sockets-backend')
 	});
 
 $('#dashboard').click((event) => {

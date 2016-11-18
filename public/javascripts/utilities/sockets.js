@@ -112,9 +112,25 @@ function saveRide() {
   };
 
   $.ajax(options)
-    .done(() => {
-      console.log('it worked');
+    .done((results) => {
+      console.log(results.id, 'frontend results');
+
+			var rideId = results.id
+			const favOptions = {
+		    contentType: 'application/json',
+		    data: JSON.stringify({rideId}),
+		    dataType: 'json',
+		    type: 'POST',
+		    url: '/favorites/record'
+		  };
+
+		return $.ajax(favOptions);
+
+
     })
+		.done(function(favResults){
+			console.log(favResults, 'added to favs, shoudl return ride_id and user_id')
+		})
     .fail(() => {
       console.log('did not work');
     });
