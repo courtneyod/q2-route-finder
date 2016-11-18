@@ -100,7 +100,7 @@ $(document).ready(function(){
 
 
 function saveRide() {
-  console.log("am I here?");
+  console.log("am I here?", currentRidePairs);
 	console.log("THIS IS CURRENT RIDE" + JSON.stringify(currentRidePairs))
   socket.close();
   const options = {
@@ -114,6 +114,9 @@ function saveRide() {
   $.ajax(options)
     .done((results) => {
       console.log(results.id, 'frontend results');
+			saveRideBtn.innerHTML ='Saved ✓'
+			saveRideBtn.style.backgroundColor = "#FC4C02";
+			saveRideBtn.style.color = "white";
 
 			var rideId = results.id
 			const favOptions = {

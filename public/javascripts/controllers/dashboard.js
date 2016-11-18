@@ -126,14 +126,15 @@ function commaSeparateNumber(val){
 
 const renderUser = function(results) {
 
+
 	$('#first-name').text(results.first_name + " " + results.last_name);
 	$('#location').text(results.location);
   var photoUrl = results.photo_url;
   console.log(results.photo_url, 'sjdhfjsdhfjdshfjshjfhs')
   console.log(results.photo_url === "")
-  if(results.photo_url === ""){
-    photoUrl = 'https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png'
-  }
+  // if(results.photo_url === ""){
+  //   photoUrl = 'https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png'
+  // }
 	$('#photo-url').css("background-image", `url(${photoUrl})`);
 };
 
@@ -181,8 +182,9 @@ const renderStravaActivity = function(results) {
 		var entryElevation = $('<li>').addClass('entry-elevation');
 
 		var social = $('<div>').addClass('social');
+    // console.log(results[i])
+    var date = convertDate(results[i].start_date)
 
-		var date = convertDate(results[i].start_date_local);
 		day.text(date);
 		activityProfileImage.attr("src","http://1.bp.blogspot.com/-1gOMRhlVQVY/T9fD_nqvtUI/AAAAAAAAAVM/OL2GhVS_7Dw/s320/strava_cycling.png");
 		activityRideImage.attr("src","http://i.imgur.com/FcSaIeK.png");
