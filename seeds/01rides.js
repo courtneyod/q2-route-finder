@@ -12,7 +12,7 @@ exports.seed = function(knex, Promise) {
 		  ride_name: 'This is a test ride',
 		  city: 'San Francisco',
 		  state: 'CA',
-      encoded_polyline: '',
+      encoded_polyline: '_p~iF~ps|U_ulLnnqC_mqNvxq`@',
 		  duration: '05:32:40',
 		  distance: '80969.4',
 		  postal_code: 0,

@@ -24,7 +24,6 @@ router.post('/', function(req, res){
 	}
 	// console.log("this is the converted polyline " + polylineUtilForm);
 	var encodedPolyline = polyline.encode(polylineUtilForm);
-	var decodedPolyline = polyline.decode(encodedPolyline);
 	// console.log("this is reqbody: " + util.inspect(req.body));
 	// console.log('THIS IS THE ENCODED POLYLINE: ' + util.inspect(encodedPolyline));
 	// console.log("this is the decoded polyline: " + util.inspect(decodedPolyline));
