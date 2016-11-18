@@ -377,6 +377,9 @@ section {
   display: none;
 }
 
+.profile-container {
+    margin: 10px 0;
+}
 
 
 }

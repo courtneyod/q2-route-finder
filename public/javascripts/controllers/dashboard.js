@@ -7,28 +7,24 @@ window.onload = function() {
   getUserInfo();
 	getActivityTimeLine()
 		.done((results) => {
-			//console.log(results, 'this is the json call')
-			// renderStravaActivity(results)
-			// getFourWeekStatsTable(results)
-			window.rideactivity = results
-			//console.log( window.rideactivity, 'hi here');
+
+			window.rideactivity = results;
 			renderStravaActivity(window.rideactivity);
 			getFourWeekStatsTable(window.rideactivity);
 			getYearStatsTable('2016');
 		})
 		.fail((err) => {
-			console.log(err)
+			console.log(err);
 		});
 	grabFavoriteRides()
 		.done((results) => {
-			window.rideFavorites = results
-      console.log(window.rideFavorites, 'favs are here')
+			window.rideFavorites = results;
 			renderFavoriteActivity(window.rideFavorites);
 		})
 		.fail((err) => {
-			console.log(err)
+			console.log(err);
 		});
-}
+};
 
 // =========================== UPdate 4 weeks stats on table=============================
 
@@ -44,7 +40,7 @@ const getFourWeekStatsTable = function(results) {
 	var fourWeeksNumRides = '';
 
 	for(var i = 0; i < results.length; i ++){
-		var rideDate = (results[i].start_date).split("T")[0]
+		var rideDate = (results[i].start_date).split("T")[0];
 
 		if (results[i].start_date > fourWeeksAgo){
 				fourWeeksDistance += results[i].distance;
@@ -55,20 +51,20 @@ const getFourWeekStatsTable = function(results) {
 	fourWeeksDistance = ((fourWeeksDistance/4)/(1760)).toFixed(1);
 	fourWeeksDuration = fourWeeksDuration/4;
 	fourWeeksDuration = secondsToHms(fourWeeksDuration);
-	fourWeeksDuration = fourWeeksDuration.split(":")
-	fourWeeksDuration = (fourWeeksDuration[0] + 'h ' + fourWeeksDuration[1] + 'm')
+	fourWeeksDuration = fourWeeksDuration.split(":");
+	fourWeeksDuration = (fourWeeksDuration[0] + 'h ' + fourWeeksDuration[1] + 'm');
 	fourWeeksNumRides = (fourWeeksNumRides/4).toFixed(0);
 	//console.log("fourWeeksDuration", fourWeeksDuration, "fourWeeksDistance", fourWeeksDistance, "fourWeeksNumRides", fourWeeksNumRides)
 
-	$('.avg-rides-per-wk').text(fourWeeksNumRides)
-	$('.avg-duration-per-wk').text(fourWeeksDuration)
-	$('.avg-distance-per-wk').text(fourWeeksDistance)
+	$('.avg-rides-per-wk').text(fourWeeksNumRides);
+	$('.avg-duration-per-wk').text(fourWeeksDuration);
+	$('.avg-distance-per-wk').text(fourWeeksDistance);
 };
 
 // ===========================Update Year stats on dashboard table ==============================
 
 const getYearStatsTable = function(year) {
-	var results = window.rideactivity
+	var results = window.rideactivity;
 	//console.log(results, 'sjdhfjdhfjdhfj')
 	var upperRange = '';
 	var lowerRange = '';
@@ -76,21 +72,18 @@ const getYearStatsTable = function(year) {
 	//var year = new Date(currentDate.getTime() - (60*60*24*year*1000));
 
 	if(year === '2016'){
-		upperRange = '2016-12-31'
-		lowerRange = '2016-01-01'
+		upperRange = '2016-12-31';
+		lowerRange = '2016-01-01';
 	} else if (year === '2015'){
-		upperRange = '2015-12-31'
-		lowerRange = '2015-01-01'
+		upperRange = '2015-12-31';
+		lowerRange = '2015-01-01';
 	} else if (year === '2014'){
-		upperRange = '2014-12-31'
-		lowerRange = '2014-01-01'
+		upperRange = '2014-12-31';
+		lowerRange = '2014-01-01';
 	} else {
-		upperRange = '2013-12-31'
-		lowerRange = '2011-01-01'
+		upperRange = '2013-12-31';
+		lowerRange = '2011-01-01';
 	}
-
-	//fourWeeksAgo = fourWeeksAgo.toISOString().split("T")[0]
-	//console.log(fourWeeksAgo, 'here')
 
 	var yearDistance = 0;
 	var yearDuration = 0;
@@ -98,30 +91,27 @@ const getYearStatsTable = function(year) {
 	var yearElevationGain = 0;
 
 	for(var i = 0; i < results.length; i ++){
-		var rideDate = (results[i].start_date).split("T")[0]
-    console.log('ridedate', rideDate, 'upperRange', upperRange, 'lowerRange', lowerRange)
-		//console.log(rideDate)
+		var rideDate = (results[i].start_date).split("T")[0];
+
 		if (rideDate < upperRange && rideDate > lowerRange){
 				yearDistance += results[i].distance;
 				yearDuration += results[i].moving_time;
 				yearElevationGain += results[i].total_elevation_gain;
 				yearNumRides += 1;
-				//console.log(yearDuration)
 		}
 	}
 	yearDistance = ((yearDistance)/(1760)).toFixed(0) + ' mi';
 	yearDuration = secondsToHms(yearDuration);
-	yearDuration = yearDuration.split(":")
+	yearDuration = yearDuration.split(":");
 	yearDuration = (yearDuration[0] + 'h ' + yearDuration[1] + 'm')
 	yearNumRides = (yearNumRides).toFixed(0);
 	yearElevationGain = (yearElevationGain*3).toFixed(0) + ' ft';
 	yearElevationGain = commaSeparateNumber(yearElevationGain)
-	//console.log("yearElevationGain", yearElevationGain, "yearDuration", yearDuration, "yearDistance", yearDistance, "yearNumRids", yearNumRides)
 
-	$('.yr-rides').text(yearNumRides)
-	$('.yr-duration').text(yearDuration)
-	$('.yr-distance').text(yearDistance)
-	$('.yr-elevation-gain').text(yearElevationGain)
+	$('.yr-rides').text(yearNumRides);
+	$('.yr-duration').text(yearDuration);
+	$('.yr-distance').text(yearDistance);
+	$('.yr-elevation-gain').text(yearElevationGain);
 };
 
 
@@ -135,10 +125,16 @@ function commaSeparateNumber(val){
 // ===========================Render user on dashboard==============================
 
 const renderUser = function(results) {
-	//console.log(results.location, 'location')
+
 	$('#first-name').text(results.first_name + " " + results.last_name);
 	$('#location').text(results.location);
-	$('#photo-url').css("background-image", `url(${results.photo_url})`);
+  var photoUrl = results.photo_url;
+  console.log(results.photo_url, 'sjdhfjsdhfjdshfjshjfhs')
+  console.log(results.photo_url === "")
+  if(results.photo_url === ""){
+    photoUrl = 'https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png'
+  }
+	$('#photo-url').css("background-image", `url(${photoUrl})`);
 };
 
 // ===========================Render the Strava Activity on Dashbaord ==============================
@@ -166,7 +162,6 @@ const renderStravaActivity = function(results) {
 
   }
 
-	console.log(results, 'we have the results');
 	var length = 10;
 	if (results.length < 10) {
 		length = results.length;
@@ -186,27 +181,12 @@ const renderStravaActivity = function(results) {
 		var entryElevation = $('<li>').addClass('entry-elevation');
 
 		var social = $('<div>').addClass('social');
-		// var btnGroup = $('<div>').addClass('btn-group');
-		// var btnKudo = $('<button>').addClass('btn-kudo');
-		// var iconKudo = $('<span>').addClass('icon-kudo');
-		// var countKudos = $('<span>').addClass('count-kudos');
-
-		// var btnComment = $('<button>').addClass('btn-comment');
-		// var iconComment = $('<span>').addClass('icon-comment');
-		// var countComments = $('<span>').addClass('count-comments');
 
 		var date = convertDate(results[i].start_date_local);
 		day.text(date);
 		activityProfileImage.attr("src","http://1.bp.blogspot.com/-1gOMRhlVQVY/T9fD_nqvtUI/AAAAAAAAAVM/OL2GhVS_7Dw/s320/strava_cycling.png");
 		activityRideImage.attr("src","http://i.imgur.com/FcSaIeK.png");
 		activityHeadline.text(results[i].name + ', ' + results[i].location_city + ' ' + results[i].location_state);
-
-		// btnKudo.attr("title","Give Kudos");
-		// iconKudo.text("Kudos");
-		// countKudos.attr("data-kudo-count","1");
-		// countKudos.text("0");
-		// btnComment.attr("title","Comment");
-		// iconComment.text("0");
 
 		var time = secondsToHms(results[i].moving_time);
 		entryDuration.text(time);
@@ -220,7 +200,6 @@ const renderStravaActivity = function(results) {
 		activityDetails.append(activityProfileImage);
 		activityDetails.append(activityEntry);
 		activityDetails.append(activityRideImage);
-    // activityDetails.append(social);
 
 		activityEntry.append(activityHeadline);
 		activityEntry.append(activitySpecs);
@@ -228,19 +207,9 @@ const renderStravaActivity = function(results) {
 		activitySpecs.append(entryDuration);
 		activitySpecs.append(entryDistance);
 		activitySpecs.append(entryElevation);
-    //
-		// social.append(btnGroup);
-		// btnGroup.append(btnKudo);
-		// btnKudo.append(iconKudo);
-		// btnKudo.append(countKudos);
-    //
-		// social.append(btnComment);
-		// btnComment.append(iconComment);
-		// btnComment.append(countComments);
+
 	}
-	// $('#first-name').text(results.first_name + " " + results.last_name);
-	// $('#location').text(results.location);
-	// $('#photo-url').css("background-image", `url(${results.photo_url})`);
+
 };
 
 
@@ -270,13 +239,7 @@ const renderFavoriteActivity = function(results) {
     stravaBtnWrapper.append(stravaBtn);
 
   }
-  //console.log('here we are in fav function')
 
-	//console.log(results, 'we have the results');
-	// var length = 10;
-	// if (results.length < 10) {
-	// 	length = results.length;
-	// }
 	for (var i = 0; i < results.length; i++) {
 
 		var dateActivity = $('<div>').addClass('date-of-activity');
@@ -292,8 +255,6 @@ const renderFavoriteActivity = function(results) {
 		var entryElevation = $('<li>').addClass('entry-elevation');
 
 		var social = $('<div>').addClass('remove-container');
-		// var btnGroup = $('<div>').addClass('btn-group');
-		// var btnFav = $('<button>').addClass('btn-fav');
     var removeFavBtn = $('<button>').addClass('remove-fav-btn');
     removeFavBtn.text('Remove from Favs');
     removeFavBtn.attr('ride-id', results[i].id);
@@ -306,13 +267,6 @@ const renderFavoriteActivity = function(results) {
 		activityProfileImage.attr("src","http://manayunk.com/assets/content/images/DSR/DSR_BikeIcon_Circle.jpg");
 		activityRideImage.attr("src","http://i.imgur.com/FcSaIeK.png");
 		activityHeadline.text(results[i].city + ', ' + results[i].state);
-
-	//	btnFav.attr("title","Fav Rides");
-		// iconKudo.text("Kudos");
-		// countKudos.attr("data-kudo-count","1");
-		// countKudos.text("0");
-		// btnComment.attr("title","Comment");
-		// iconComment.text("0");
 
 		entryDuration.text(results[i].duration);
 		entryDistance.text((results[i].distance/(1760)).toFixed(1) + 'mi');
@@ -338,15 +292,8 @@ const renderFavoriteActivity = function(results) {
 		social.append(removeFavBtn);
 
     createClickEventForRemoveFav('click', removeFavBtn, results[i].id, dateActivity, activityDetails);
-		//btnGroup.append(btnFav);
-
-		// social.append(btnComment);
-		// btnComment.append(iconComment);
-		// btnComment.append(countComments);
 	}
-	// $('#first-name').text(results.first_name + " " + results.last_name);
-	// $('#location').text(results.location);
-	// $('#photo-url').css("background-image", `url(${results.photo_url})`);
+
 };
 
 
@@ -360,8 +307,6 @@ function secondsToHms(d) {
 
 function convertDate(date){
 	var date = date.split('T');// split string and create array.
-	//console.log(arr, 'hi')
-	//var date = new Date(arr[0], arr[1] -1, arr[2], arr[3], arr[4], arr[5]);
 	return date[0];
 }
 
@@ -393,12 +338,10 @@ window.onclick = function(event) {
 function dropDownListener(){
 	var dropDownValues = document.getElementsByClassName('clickable')
 	//var dropDownButton = $('selection')
-	//console.log(dropDownValues)
 	for(var i = 0; i < dropDownValues.length; i ++){
 		// Listen for the event.
 		dropDownValues[i].addEventListener('click', function (event) {
 		  // e.target matches elem
-				//console.log(typeof event.target.innerHTML)
 				if(event.target.innerHTML === "2015"){
 					getYearStatsTable('2015')
 					$('.selection').text('2015' + '∨')
@@ -453,12 +396,10 @@ $( ".switch" ).click(function() {
 // ===========================REMOVE FAVORITE RIDE =================================
 
 function createClickEventForRemoveFav(eventName, element, route, removeElOne, removeElTwo){
-  //console.log(element[0])
-  console.log(route, 'route')
+
   element[0].addEventListener(eventName, function(event) {
     var elementId = event.currentTarget;
     elementId = element[0].getAttribute('ride-id');
-    //console.log(typeof elementId)
 
     const options = {
     dataType: 'json',
@@ -468,7 +409,7 @@ function createClickEventForRemoveFav(eventName, element, route, removeElOne, re
 
   $.ajax(options)
     .done((res) => {
-      console.log(res)
+      //console.log(res)
       removeElOne[0].remove()
       removeElTwo[0].remove()
       element[0].remove()
