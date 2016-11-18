@@ -14,17 +14,17 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="/public/javascripts/controllers/index.js" charset="utf-8"></script>
+    <script src="/public/javascripts/controllers/login.js" charset="utf-8"></script>
     <title>Route Finder</title>
 </head>
 
 <body>
     <div class="navbar-fixed">
-        <nav class="master-nav-head">
-            <div class="nav-wrapper">
-                <img class="nav-content" src="/public/images/route-finder.png" alt="" />
-                <p class="nav-content nav-copy"><a class="nav-content" href="index.html">RouteFinder</a></p>
-            </div>
-        </nav>
+      <nav class="master-nav-head">
+        <ul class="nav-wrapper">
+          <li class="nav-list nav-list-first" >RouteFinder</li>
+          </ul>
+      </nav>
     </div>
     <main class="main-container main-container-image">
         <div>
@@ -33,7 +33,7 @@
             </p>
         </div>
         <div class="row form-container">
-            <form id="form" class="route-input" action="login" method="POST">
+            <form id="form" class="route-input login-form" >
               <div class="input-wrapper">
               <div class="strava btn-large" id="strava">
                 <a class="button strava-button" href="https://www.strava.com/oauth/authorize?client_id=14704&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fauth%2Fconfirm&response_type=code&scope=view_private%2Cwrite">
@@ -56,10 +56,12 @@
                         </div>
                       </div>
                         <div class="login-divs">
+                          <div class="email-error-holder"></div>
                           <label class="range-slider login-label" for="email"></label>
                           <input class="user-input-login" type="email" placeholder="Email" id="email" name="email" required />
                         </div>
                         <div class="login-divs">
+                          <div class="password-error-holder"></div>
                           <label class="range-slider login-label" for="password"></label>
                           <input class="user-input-login" type="password" placeholder="Password" id="password" name="password" required />
                         </div>
@@ -71,7 +73,7 @@
                     </div>
                 </div>
                 <div>
-                    <button class="btn-large" id="search-button" type="submit" name="action">Search</button>
+                    <button class="btn-large" id="login-button" type="submit" name="action">Login</button>
                 </div>
             </form>
             </div>
@@ -86,7 +88,21 @@
           </p>
         </div>
 
-        <div class="details-image">
+        <div class="details-image-route">
+
+        </div>
+      </div>
+    </section>
+    <section class="details-container">
+      <div class="details-div">
+        <div class="details-copy">
+          <h2>Create a dashboard</h2>
+          <p>
+            Save your favortie rides and checkout past rides you logged on Strava
+          </p>
+        </div>
+
+        <div class="details-image-dashboard">
 
         </div>
       </div>

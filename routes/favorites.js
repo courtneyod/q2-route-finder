@@ -96,19 +96,6 @@ router.get('/', function(req, res, next){
 // });
 
 router.post('/', function(req, res, next){
-	//console.log(req.body, 'did you save it? ')
-	// { name: 'To Golden Gate Bridge',
-  // ids: 3576164,
-  // cityAndState: '2201-2223 Hastings Dr, Belmont',
-  // distance: 80559.1,
-  // elevation_gain: 340.377,
-  // elevation_loss: 395.421,
-  // first_lat: 37.5093,
-  // last_lat: null,
-  // first_lng: -122.29606999999999,
-  // last_lng: null,
-  // duration: null }
-
 	knex('rides').insert({
 		'ride_with_gps_id': req.body.ids,
 		'city_state': req.body.cityAndState,
@@ -152,24 +139,43 @@ router.post('/', function(req, res, next){
 	});
 });
 
-router.delete('/', function(req, res, next){
-	//console.log(req.body, 'ksdfkdj')
-	knex('favorites').where('ride_id', req.body.ride_id).del().first()
+router.post('/record', function(req, res, next){
+		var rideId = req.body.rideId;
+		console.log(req.cookies['/user'], 'me');
+		var email = req.cookies['/user'];
+
+		knex('users').where({'email': email}).returning('*')
+		.then(function(results){
+			console.log(results, 'this is the 3rd knex post');
+
+			knex('favorite_rides').insert({'ride_id': rideId, 'user_id': results[0].id}).returning('*')
+			.then(function(rows){
+				console.log(rows, 'yes you did it!!!!');
+
+			}).catch(function(err){
+				console.log(err, 'insert into favortes error');
+				res.status(401);
+				res.set('Content-Type', 'text/plain');
+				res.send('Unauthorized');
+			});
+	});
+});
+
+
+router.delete('/:id', function(req, res, next){
+
+	//console.log(req.params.id, 'delete')
+	knex('favorite_rides').where('ride_id', req.params.id).first().del()
 	.then(function(rows){
+		console.log('hereeeeeee')
 		delete rows.id
 		delete rows.created_at
 		delete rows.updated_at
 
-		if(req.cookies['/token'] === 'cookiemonster.something.somwhing'){
-			res.json(rows)
-		} else {
-			res.status(401);
-			res.set('Content-Type', 'text/plain');
-			res.send('Unauthorized');
-		}
-
+		res.json(rows)
 
 	}).catch(function(err){
+		console.log(err)
 		res.status(401);
 		res.set('Content-Type', 'text/plain');
 		res.send('Unauthorized');

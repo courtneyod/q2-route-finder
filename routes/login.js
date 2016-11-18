@@ -23,18 +23,28 @@ router.get('/', function(req, res, next){
 })
 
 router.post('/', function(req, res, next){
-	const { email, password } = req.body;
-	console.log(req.body, 'req.body')
+	const email = req.body.email;
+	const password = req.body.password;
+
+	// console.log(req.body, 'req.body');
+	//
+	// console.log(email, password, 'this wont log');
 
 	if (!email || !email.trim()) {
-		return next(boom.create(400, 'Email must not be blank'));
+		return next(boom.create(401, 'Email must not be blank'));
 	}
 
-	if (!password || password.length < 8) {
-		return next(boom.create(400, 'Password must not be blank'));
+	if (!password || password.length < 7) {
+		res.set('Content-Type', 'text/plain');
+		res.status(406);
+		res.send('Password needs to be longer than 7 character');
+		// return next(boom.create(402, 'Password needs to be longer than 8 characters'));
 	}
 	if (!(req.body.password === req.body.confirmPassword)){
-		return next(boom.create(400, 'Password does not match'));
+		res.set('Content-Type', 'text/plain');
+		res.status(406);
+		res.send('Password does not match');
+		// return next(boom.create(403, 'Password does not match'));
 	}
 
 	//console.log(req.body)
@@ -44,14 +54,17 @@ router.post('/', function(req, res, next){
 	.then(function(row){
 		//console.log(row)
 		if (row) {
-			 throw boom.create(400, 'This email address is already taken');
+			res.set('Content-Type', 'text/plain');
+			res.status(406);
+			res.send('This email address is already taken');
+			//  throw boom.create(405, 'This email address is already taken');
 		 }
 	})
 
 	bcrypt.hash(req.body.password, 12)
 	.then(function(hashedPassword){
 
-	console.log(hashedPassword, 'hasheddd')
+		console.log(hashedPassword, 'hasheddd')
 
 		knex('users').insert({'email': req.body.email, 'first_name': req.body.firstName, 'last_name': req.body.lastName, 'hashed_password': hashedPassword})
 		.then(function(results){
@@ -64,7 +77,7 @@ router.post('/', function(req, res, next){
 			res.cookie('/login_token', req.body.firstName, opts);
 			res.cookie('/user', req.body.email, opts);
 
-			res.redirect('/dashboard');
+			res.json(true);
 		});
 
 	})

@@ -9,7 +9,9 @@ var passport = require('passport');
 LocalStrategy = require('passport-local').Strategy;
 var strava = require('strava-v3');
 
-require('dotenv').load();
+// if(process.env.NODE_ENV !== 'production'){
+//   require('dotenv').load();
+// }
 
 var findRide = require('./routes/find-ride');
 var login = require('./routes/login');
@@ -31,6 +33,7 @@ var app = express();
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load();
   require('dotenv').config();
 }
 
@@ -68,6 +71,9 @@ app.use(cookieSession({
   keys: process.env.JWT_SECRET
 }));
 
+app.get('/', function(req, res, next){
+  res.redirect('login')
+})
 
 
 
