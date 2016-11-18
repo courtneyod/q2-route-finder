@@ -52,7 +52,7 @@ function getYPixel(val, data, maxY) {
 
 function drawGraph(data){
   var graphContainerDiv = $('.graph-container');
-  graphContainerDiv.append('<canvas id="graph" width="1000" height="400" style="border:1px solid #ccc; padding: 10px;"></canvas>');
+  graphContainerDiv.append('<canvas id="graph" width="800" height="200" style="border:1px solid #ccc; padding: 10px;"></canvas>');
   graph = $('#graph');
   var context = graph[0].getContext('2d');
 

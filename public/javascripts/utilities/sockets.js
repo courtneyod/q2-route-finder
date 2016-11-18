@@ -71,7 +71,7 @@ var currentRidePairs = [];
 // });
 
 $(document).ready(function(){
-  var socket = io('http://localhost:8000/');
+  var socket = io();
   //===========broadcasts location every 5 seconds ===============================
 	check_pos = setInterval(function(){
     var currentPoint = {};
@@ -100,8 +100,13 @@ $(document).ready(function(){
 
 
 function saveRide() {
+<<<<<<< HEAD
   console.log("am I here?");
 	console.log("THIS IS CURRENT RIDE" + JSON.stringify(currentRidePairs));
+=======
+  console.log("am I here?", currentRidePairs);
+	console.log("THIS IS CURRENT RIDE" + JSON.stringify(currentRidePairs))
+>>>>>>> e2e6c9f1e97ee05ad410e6783a187d37c1534e13
   socket.close();
   const options = {
     contentType: 'application/json',
@@ -114,6 +119,9 @@ function saveRide() {
   $.ajax(options)
     .done((results) => {
       console.log(results.id, 'frontend results');
+			saveRideBtn.innerHTML ='Saved ✓'
+			saveRideBtn.style.backgroundColor = "#FC4C02";
+			saveRideBtn.style.color = "white";
 
 			var rideId = results.id;
 			const favOptions = {
