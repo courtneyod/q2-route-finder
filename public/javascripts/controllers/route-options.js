@@ -296,8 +296,12 @@ function createClickEventForFavButton(eventName, element, route){
   element.addEventListener(eventName, function(event) {
     var elementId = event.currentTarget;
     elementId = element.getAttribute('ride_id');
-    console.log(window.polylines)
+    console.log(window.polylines, 'here')
 
+    // var rideObj = {
+    //   ride: route,
+    //   polylines: window.polylines
+    // }
     const options = {
     contentType: 'application/json',
     data: JSON.stringify(route),

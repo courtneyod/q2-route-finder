@@ -71,7 +71,7 @@ var currentRidePairs = [];
 // });
 
 $(document).ready(function(){
-  var socket = io('http://localhost:8000/');
+  var socket = io();
   //===========broadcasts location every 5 seconds ===============================
 	check_pos = setInterval(function(){
     var currentPoint = {};
