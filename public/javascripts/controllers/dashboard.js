@@ -222,13 +222,13 @@ const renderFavoriteActivity = function(results) {
   const activityFeed = $('#favorite-feed');
 
   if(results < 1){
-    var addStravaContainer = $('<div>').addClass('add-strava-container');
-    var addStravaText = $('<h3>').addClass('add-strava-text');
+    var addStravaContainer = $('<div>').addClass('add-fav-ride-container');
+    var addStravaText = $('<h3>').addClass('add-fav-ride-text');
     addStravaText.text("Looks like you don\'t have any favorites saved here. Explore new rides and save it to your dashboard.");
 
     var inputWrapper = $('<div>').addClass('input-wrapper');
-    var stravaBtnWrapper = $('<div>').addClass('strava-btn-wrapper');
-    var stravaBtn = $('<a>').addClass('strava-btn');
+    var stravaBtnWrapper = $('<div>').addClass('fav-ride-btn-wrapper');
+    var stravaBtn = $('<a>').addClass('fav-ride-btn');
 
     stravaBtn.attr("href", "/route-finder");
     stravaBtn.text('Explore Routes!');
