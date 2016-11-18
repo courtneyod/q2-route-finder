@@ -19,19 +19,22 @@
 
 <body>
     <div class="navbar-fixed">
-        <nav class="master-nav-head">
-            <div class="nav-wrapper">
-                <img class="nav-content" src="../images/route-finder.png" alt="" />
-                <p class="nav-content nav-copy"><a class="nav-content" href="index.html">RouteFinder</a></p>
-            </div>
-        </nav>
+      <nav class="master-nav-head">
+        <ul class="nav-wrapper">
+          <li class="nav-list-first nav-list" >RouteFinder</li>
+          <li class="nav-list" id="logout">Log Out</li>
+
+          <li class="nav-list explorer" id="explore-rides">Explore Rides</li>
+          <li class="nav-list" id="record-ride">Record Ride</li>
+          </ul>
+      </nav>
     </div>
     <main class="main-container">
         <div class="row form-container">
-            <form id="form" class="route-input" action="route-options.html" method="GET">
+            <form id="form" class="route-input" action="/login/confirm-password" method="POST">
               <div class="input-wrapper">
               <p class="form-text">
-                  Would you like to create an account?
+                  Would you like to create an account? Create a Password!
               </p>
                 <div class="input-field">
                     <fieldset class="user-inputs">
@@ -42,38 +45,24 @@
                         </div>
                         <div class="login-divs">
                           <label class="range-slider login-label" for="confirm-password"></label>
-                          <input class="user-input-login" type="password" placeholder="password" id="confirm-password" name="Confirm password" required />
+                          <input class="user-input-login" type="password" placeholder="Confirm password" id="confirm-password" name="Confirm password" required />
                         </div>
                     </fieldset>
                     </div>
                 </div>
                 <div>
-                    <button class="btn-large" id="search-button" type="submit" name="action">Search</button>
+                    <button class="btn-large" id="search-button" type="submit" name="action">Submit</button>
                 </div>
             </form>
             </div>
 
     </main>
-    <section class="details-container">
-      <div class="details-div">
-        <div class="details-copy">
-          <h2>Discover new routes that work for you!  </h2>
-          <p>
-            Don't spend all day sifting through blog posts to find a fun ride.
-          </p>
-        </div>
-
-        <div class="details-image">
-
-        </div>
-      </div>
-    </section>
 
     <footer>
       <div class="footer-container">
         <ul class="footer-list">
           <li>
-            &copy; Courtney O'Donnell
+            &copy; Courtney & Jeremy
           </li>
         </ul>
         <ul class="footer-list">

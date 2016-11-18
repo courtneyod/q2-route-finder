@@ -52,7 +52,12 @@ router.get("/confirm", function(req, res){
 
 				knex('users').insert({'email': user_email, 'first_name': first_name, 'last_name': last_name, 'photo_url': photo_url, 'strava_access_token': access_token}).returning('*')
 			  .then(function(results){
-					res.redirect('/create-account');
+					if (results[0].strava_access_token === false){
+						res.redirect('/create-account');
+					} else {
+						res.redirect('/dashboard');
+					}
+
 				});
   		} else {
 
