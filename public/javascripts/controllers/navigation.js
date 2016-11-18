@@ -3,7 +3,6 @@
 
 $('#explore-rides').click((event) => {
 		//event.preventDefault();
-		console.log('hi im here')
 		//$.getJSON(`/find-ride`)
 		$(location).attr('href', '/find-ride')
 
@@ -23,5 +22,6 @@ $('#record-ride').click((event) => {
 
 $('#dashboard').click((event) => {
 		//event.preventDefault();
+		console.log('regeresteds')
 		$(location).attr('href', '/dashboard')
 	});
