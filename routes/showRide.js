@@ -11,11 +11,10 @@ router.get('/:id', function(req,res,next){
     .then(function(results){
         if(results){
           console.log(results);
-          let decodedPolyline = polyline.decode(results.encoded_polyline);
-          console.log(decodedPolyline);
-          res.json(decodedPolyline);
+          // let decodedPolyline = polyline.decode(results.encoded_polyline);
+          res.json(results[0]);
       } else {
-        throw new Error("No book found with that ID");
+        throw new Error("No ride found with that ID");
       }
     })
     .catch(function(err){

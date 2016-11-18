@@ -18,20 +18,16 @@
 	      <ul class="nav-wrapper">
 	        <li class="nav-list-first nav-list" >RouteFinder</li>
 	        <li class="nav-list" id="logout">Log Out</li>
-
 	        <li class="nav-list explorer" id="explore-rides">Explore Rides</li>
 	        <li class="nav-list" id="dashboard">Dashboard</li>
 	        </ul>
 			</nav>
     </div>
-		<div class="record-wrapper">
-			<button class="nav-float" id="saveRideBtn" type="button">Save current ride!</button>
+    <div id="map">
 		</div>
-		<div id="map">
-		</div>
-    <div class="current-route">
-    </div>
-		<script src="/public/javascripts/controllers/navigation.js" type="text/javascript"></script>
-
-	</body>
+    <script src="/public/javascripts/controllers/navigation.js" type="text/javascript"></script>
+		<script src="/public/javascripts/controllers/google-maps.js" type="text/javascript"></script>
+		<script src="/public/javascripts/controllers/rideController.js" type="text/javascript"></script>
+		</script>
+  </body>
 </html>

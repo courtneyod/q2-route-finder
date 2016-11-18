@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 //initMap(firstLat ,firstLong, locations);
 function initMap(firstLat ,firstLong, locations) {
@@ -33,7 +33,7 @@ function initMap(firstLat ,firstLong, locations) {
     map,
     directionsDisplay,
     directionsService
-  }
+  };
 }
 
 // draw route lines on to google maps
@@ -62,5 +62,40 @@ function addMarkers(firstLatLongMaker, lastLatLongMaker){
     map: mapObj.map,
     title: 'Last marker!'
   });
-  mapObj.map.setCenter(window.marker.getPosition())
+  mapObj.map.setCenter(window.marker.getPosition());
+}
+
+//converts polyline to format googlemaps can use
+function convertPolyline (decodedPolyline) {
+  let mapsPolyline = [];
+  for(var i = 0; i < decodedPolyline.length; i++) {
+    var currentPair = decodedPolyline[i];
+    var coordinatePair = {};
+    coordinatePair.lat = currentPair[0];
+    coordinatePair.lng = currentPair[1];
+    mapsPolyline.push(coordinatePair);
+  }
+  return mapsPolyline;
+}
+
+//creates new polyline
+function renderNewPath(decodedPolyline) {
+  var mapsPolyline = convertPolyline(decodedPolyline);
+  var path = new google.maps.Polyline({
+    path: mapsPolyline,
+    strokeColor: '#00ff66',
+    strokeOpacity: 1.0,
+    strokeWeight: 3,
+    clickable: true,
+    visible:true,
+  });
+}
+
+
+//computes distance in MILES of new polyline
+function getDistanceOf(decodedPolyline) {
+  var mapsPolyline = convertPolyline(decodedPolyline);
+  var distanceInMeters = google.maps.geometry.spherical.computeLength(mapsPolyline);
+  var distanceInMiles = distanceInMeters * 0.000621371;
+  return distanceInMiles.toFixed(1);
 }

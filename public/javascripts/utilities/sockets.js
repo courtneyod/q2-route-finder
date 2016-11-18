@@ -101,7 +101,7 @@ $(document).ready(function(){
 
 function saveRide() {
   console.log("am I here?");
-	console.log("THIS IS CURRENT RIDE" + JSON.stringify(currentRidePairs))
+	console.log("THIS IS CURRENT RIDE" + JSON.stringify(currentRidePairs));
   socket.close();
   const options = {
     contentType: 'application/json',
@@ -115,7 +115,7 @@ function saveRide() {
     .done((results) => {
       console.log(results.id, 'frontend results');
 
-			var rideId = results.id
+			var rideId = results.id;
 			const favOptions = {
 		    contentType: 'application/json',
 		    data: JSON.stringify({rideId}),
@@ -129,7 +129,7 @@ function saveRide() {
 
     })
 		.done(function(favResults){
-			console.log(favResults, 'added to favs, shoudl return ride_id and user_id')
+			console.log(favResults, 'added to favs, shoudl return ride_id and user_id');
 		})
     .fail(() => {
       console.log('did not work');

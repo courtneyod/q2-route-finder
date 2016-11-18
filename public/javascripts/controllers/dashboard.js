@@ -258,8 +258,9 @@ const renderFavoriteActivity = function(results) {
     var removeFavBtn = $('<button>').addClass('remove-fav-btn');
     removeFavBtn.text('Remove from Favs');
     removeFavBtn.attr('ride-id', results[i].id);
+    activityRideImage.attr('ride-id', results[i].id);
 
-    var name = results[i].ride_name
+    var name = results[i].ride_name;
     if(results[i].ride_name === ''){
       name = 'favorite bike ride';
     }
