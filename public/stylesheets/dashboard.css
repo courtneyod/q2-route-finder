@@ -227,6 +227,27 @@ section {
 }
 
 
+/*<===========Add favorites button ====================*/
+
+.add-strava-text {
+	color: #666;
+	font-size: 14px;
+}
+
+.strava-btn-wrapper {
+	background-color: rgb(252, 76, 2);
+	border-color: rgb(252, 76, 2);
+	display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  width: 100%;
+	min-height: 40px;
+  margin-top: 10px;
+	background-image: none;
+}
+
+
 /*<===========Toggle ====================*/
 /* The switch - the box around the slider */
 .switch {
