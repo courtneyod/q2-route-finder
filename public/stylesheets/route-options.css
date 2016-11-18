@@ -298,5 +298,26 @@ table {
 /* phones ----------- */
 @media only screen and (max-width : 375px) {
 
+	section {
+		display: block;
+		margin: 0;
+	}
+	.nav-list-first {
+		display: none;
+	}
+
+	.ride-stats-container {
+		padding: 45px 0;
+	}
+
+	.top-panel {
+		display: none;
+	}
+
+	.route-container {
+		margin: 0;
+	}
+
+
 
 }
