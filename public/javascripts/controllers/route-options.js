@@ -3,6 +3,7 @@
 window.curBikeLine = null;
 window.marker = null;
 window.elevator = null;
+window.polylines = null;
 var mapObj;
 
 // window.routeExports = {};
@@ -228,13 +229,17 @@ function displayRouteOnMap(routeId){
   var routeDetailsPromise = getRouteDetails(routeId);
 //  console.log(routeId, 'routeId')
 //  console.log(routeDetailsPromise, 'routeDetailsPromise')
+
   routeDetailsPromise.done(function(data){
     createPathsObject(data.track_points)
     $('#graph').remove(); // this is my <canvas> element
     window.track_points = (data.track_points)
+    //console.log(window.track_points)
     parseDataCanvas(data.track_points);
   });
 }
+
+
 
 /* create Paths object with Lat and Longs for Google PolyLine */
 function createPathsObject(trackPoints){
@@ -250,9 +255,12 @@ function createPathsObject(trackPoints){
         });
       // paths.push( new google.maps.LatLng(trackPoints[i].y, trackPoints[i].x))
       }
-}
-createAndAppendSubRoute(firstLatLongMaker, lastLatLongMaker, paths);
-}
+
+  }
+  window.polylines = paths
+  window.polylines = JSON.stringify(window.polylines)
+  createAndAppendSubRoute(firstLatLongMaker, lastLatLongMaker, paths);
+  }
 
 function createAndAppendSubRoute(firstLatLongMaker, lastLatLongMaker, paths){
   // Load the Visualization API and the columnchart package.
@@ -288,8 +296,12 @@ function createClickEventForFavButton(eventName, element, route){
   element.addEventListener(eventName, function(event) {
     var elementId = event.currentTarget;
     elementId = element.getAttribute('ride_id');
-    console.log(typeof elementId)
+    console.log(window.polylines, 'here')
 
+    // var rideObj = {
+    //   ride: route,
+    //   polylines: window.polylines
+    // }
     const options = {
     contentType: 'application/json',
     data: JSON.stringify(route),

@@ -68,7 +68,7 @@ table {
 	z-index: 999;
 	position: absolute;
 	width: 100%;
-	margin-top: 47px;
+	margin-top: 40px;
 }
 
 .route-options-mile-range {
@@ -140,7 +140,7 @@ table {
 /* ----- =route results ----- */
 
 .route-container {
-	margin-top: 123px;
+	margin-top: 71px;
 	height: 100%;
 	width: 100%;
 }
@@ -244,6 +244,7 @@ table {
 #map {
   height: 100%;
   width: 100%;
+	z-index: -10;
 }
 
 .map-container {
@@ -260,6 +261,11 @@ table {
   white-space: nowrap;
   overflow: hidden;
 	font-size:0;
+}
+
+#graph {
+	background-color: white;
+	z-index: 10;
 }
 
 
@@ -318,6 +324,17 @@ table {
 		margin: 0;
 	}
 
+	.favorite {
+    font-size: 9px;
+    margin: 10px -7px 0 0;
+	}
 
+	.ride-name {
+		font-size: 12px;
+	}
+
+	.city-state {
+    font-size: 11px
+	}
 
 }

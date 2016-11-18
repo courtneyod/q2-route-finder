@@ -126,14 +126,15 @@ function commaSeparateNumber(val){
 
 const renderUser = function(results) {
 
+
 	$('#first-name').text(results.first_name + " " + results.last_name);
 	$('#location').text(results.location);
   var photoUrl = results.photo_url;
   console.log(results.photo_url, 'sjdhfjsdhfjdshfjshjfhs')
   console.log(results.photo_url === "")
-  if(results.photo_url === ""){
-    photoUrl = 'https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png'
-  }
+  // if(results.photo_url === ""){
+  //   photoUrl = 'https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png'
+  // }
 	$('#photo-url').css("background-image", `url(${photoUrl})`);
 };
 
@@ -143,13 +144,13 @@ const renderStravaActivity = function(results) {
 	const activityFeed = $('#activity-feed');
 
   if(results < 1){
-    var addStravaContainer = $('<div>').addClass('add-strava-container');
-    var addStravaText = $('<h3>').addClass('add-strava-text');
+    var addStravaContainer = $('<div>').addClass('link-strava-account');
+    var addStravaText = $('<h3>').addClass('link-strava-account');
     addStravaText.text('Sign in through your Strava account and get your recent rides here');
 
-    var inputWrapper = $('<div>').addClass('input-wrapper');
-    var stravaBtnWrapper = $('<div>').addClass('strava-btn-wrapper');
-    var stravaBtn = $('<a>').addClass('strava-btn');
+    var inputWrapper = $('<div>').addClass('link-strava-account-wrapper');
+    var stravaBtnWrapper = $('<div>').addClass('link-strava-account-btn-wrapper');
+    var stravaBtn = $('<a>').addClass('link-strava-account-btn');
 
     stravaBtn.attr("href", "https://www.strava.com/oauth/authorize?client_id=14704&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fauth%2Fconfirm&response_type=code&scope=view_private%2Cwrite");
     stravaBtn.text('Sign in with Strava');
@@ -181,8 +182,9 @@ const renderStravaActivity = function(results) {
 		var entryElevation = $('<li>').addClass('entry-elevation');
 
 		var social = $('<div>').addClass('social');
+    // console.log(results[i])
+    var date = convertDate(results[i].start_date)
 
-		var date = convertDate(results[i].start_date_local);
 		day.text(date);
 		activityProfileImage.attr("src","http://1.bp.blogspot.com/-1gOMRhlVQVY/T9fD_nqvtUI/AAAAAAAAAVM/OL2GhVS_7Dw/s320/strava_cycling.png");
 		activityRideImage.attr("src","http://i.imgur.com/FcSaIeK.png");
@@ -222,7 +224,7 @@ const renderFavoriteActivity = function(results) {
   if(results < 1){
     var addStravaContainer = $('<div>').addClass('add-strava-container');
     var addStravaText = $('<h3>').addClass('add-strava-text');
-    addStravaText.text('Explore new rides and save it to your dashboard.');
+    addStravaText.text("Looks like you don\'t have any favorites saved here. Explore new rides and save it to your dashboard.");
 
     var inputWrapper = $('<div>').addClass('input-wrapper');
     var stravaBtnWrapper = $('<div>').addClass('strava-btn-wrapper');
@@ -258,6 +260,7 @@ const renderFavoriteActivity = function(results) {
     var removeFavBtn = $('<button>').addClass('remove-fav-btn');
     removeFavBtn.text('Remove from Favs');
     removeFavBtn.attr('ride-id', results[i].id);
+    activityRideImage.attr('ride-id', results[i].id);
 
     var name = results[i].ride_name
     if(results[i].ride_name === ''){
