@@ -100,13 +100,7 @@ $(document).ready(function(){
 
 
 function saveRide() {
-<<<<<<< HEAD
-  console.log("am I here?");
-	console.log("THIS IS CURRENT RIDE" + JSON.stringify(currentRidePairs));
-=======
-  console.log("am I here?", currentRidePairs);
-	console.log("THIS IS CURRENT RIDE" + JSON.stringify(currentRidePairs))
->>>>>>> e2e6c9f1e97ee05ad410e6783a187d37c1534e13
+
   socket.close();
   const options = {
     contentType: 'application/json',

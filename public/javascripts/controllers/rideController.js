@@ -1,50 +1,62 @@
-window.onload = function() {
-  const options = {
-  dataType: 'json',
-  type: 'get',
-  url: `/showRide/${route}`
-};
 
-$.ajax(options)
-  .done((res) => {
-    //console.log(res)
-    removeElOne[0].remove()
-    removeElTwo[0].remove()
-    element[0].remove()
-    //$('.favorites').text('Saved')
-  })
-  .fail((err) => {
-    console.log(err)
-    console.log('did not work')
-  });
-}
-
-function addEventListenerMap (){
-  var staticMapImage = $(".activity-ride-image");
+function addEventListenerMap(){
+  console.log('event')
+  var staticMapImage = document.getElementsByClassName('activity-ride-image');
+  console.log(staticMapImage[0])
   if(staticMapImage.length > 0){
     for(var i = 0; i < staticMapImage.length; i++){
       var currentMap = staticMapImage[i];
 
-      currentMap.addEventListener("click", getRequest)
+      getRequest('click', currentMap)
+      // currentMap.addEventListener("click", getRequest)
     }
   }
 
 }
 
- function getRequest(elementId){
 
-  var rideId = event.currentTarget.attr('ride-id')
+function getRequest(eventName, element){
 
-  const options=  {
-    dataType: 'json',
-    type: "GET",
-    url: `/rides/${rideId}`
-  };
+  element.addEventListener(eventName, function(event){
+    //console.log(event.currentTarget, 'current')
 
-   $.ajax(options)
-   .done((results) => {
-     console.log(results);
-   })
- }
+     var rideId = event.currentTarget.getAttribute('ride-id')
+     //console.log(rideId)
+     window.location = `/showride/${rideId}`
+  //    const options=  {
+  //      dataType: 'json',
+  //      type: "GET",
+  //      url: `/showride/${rideId}`
+  //    };
+  //
+  //     $.ajax(options)
+  //     .done((results) => {
+  //       console.log(results, 'resutl');
+  //       renderFavPolyline(results)
+  //     })
+ })
 
 }
+
+// function renderFavPolyline(ride){
+//
+//   if(ride.length > 1){
+//
+//     var polyline = convertPolyline(ride)
+//     console.log(polyline, 'polyline encoded')
+//
+//     const options=  {
+//       dataType: 'json',
+//       type: "GET",
+//       url: `/showride/`
+//     };
+//
+//     window.location = '/showride'
+//
+//     //  $.ajax(options)
+//     //  .done(() => {
+//     //    console.log('get here')
+//     //    renderNewPath(polyline)
+//     //  })
+//   }
+// }

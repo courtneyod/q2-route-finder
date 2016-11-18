@@ -1,5 +1,13 @@
 "use strict";
 
+// function initMapSf() {
+// 	map = new google.maps.Map(document.getElementById('map'), {
+// 		center: {lat: 37.787, lng: -122.396},
+// 		zoom: 14
+// 	});
+// }
+
+
 //initMap(firstLat ,firstLong, locations);
 function initMap(firstLat ,firstLong, locations) {
   var myLatLng = {lat: firstLat, lng: firstLong};

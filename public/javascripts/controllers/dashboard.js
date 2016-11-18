@@ -4,7 +4,9 @@ window.rideactivity = null;
 window.rideFavorites = null;
 
 window.onload = function() {
+  console.log('here now')
   getUserInfo();
+//  console.log('here now')
 	getActivityTimeLine()
 		.done((results) => {
 
@@ -230,7 +232,7 @@ const renderFavoriteActivity = function(results) {
     var stravaBtnWrapper = $('<div>').addClass('fav-ride-btn-wrapper');
     var stravaBtn = $('<a>').addClass('fav-ride-btn');
 
-    stravaBtn.attr("href", "/route-finder");
+    stravaBtn.attr("href", "/find-ride");
     stravaBtn.text('Explore Routes!');
 
 
@@ -296,6 +298,7 @@ const renderFavoriteActivity = function(results) {
 
     createClickEventForRemoveFav('click', removeFavBtn, results[i].id, dateActivity, activityDetails);
 	}
+  addEventListenerMap()
 
 };
 
