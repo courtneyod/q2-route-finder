@@ -71,6 +71,9 @@ app.use(cookieSession({
   keys: process.env.JWT_SECRET
 }));
 
+app.get('/', function(req, res, next){
+  res.redirect('login')
+})
 
 
 
