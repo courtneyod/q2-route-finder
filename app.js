@@ -9,7 +9,9 @@ var passport = require('passport');
 LocalStrategy = require('passport-local').Strategy;
 var strava = require('strava-v3');
 
-require('dotenv').load();
+if(process.env.NODE_ENV !== 'production'){
+  require('dotenv').load();
+}
 
 var findRide = require('./routes/find-ride');
 var login = require('./routes/login');
