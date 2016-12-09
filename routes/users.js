@@ -11,7 +11,7 @@ const boom = require('boom');
 router.get('/', function(req, res, next){
 
 	var emailToken = req.cookies['/user']
-	console.log(emailToken, 'here is the email token')
+	// console.log(emailToken, 'here is the email token')
 
 	knex('users').where('email', emailToken).first()
 	.then(function(results){

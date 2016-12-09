@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
       table.integer('ride_with_gps_id').unique();
       table.string('city_state').notNullable().defaultTo('');
       table.float('distance').notNullable();
-      table.string('encoded_polyline').defaultTo('');
+      table.text('encoded_polyline', longtext).defaultTo('');
       table.float('elevation_gain').notNullable();
       table.float('elevation_loss').notNullable();
       table.float('first_lat').notNullable();

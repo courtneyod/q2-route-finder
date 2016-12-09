@@ -37,11 +37,11 @@ const boom = require('boom');
 
 router.get('/', function(req, res, next){
 	var emailToken = req.cookies['/user']
-	console.log('do you get here')
+	// console.log('do you get here')
 	knex('users').where('email', emailToken).first()
 	.then(function(results){
 
-		console.log(results, 'results')
+		// console.log(results, 'results')
 		var userId = results.id
 
 		knex('favorite_rides')
@@ -50,7 +50,7 @@ router.get('/', function(req, res, next){
 		.where('user_id', userId)
 		.select('*')
 		.then(function(rows){
-			 console.log(rows, 'here')
+			 console.log(rows, 'here are favorites')
 			 res.json(rows)
 
 		}).catch(function(err){
@@ -109,18 +109,18 @@ router.post('/', function(req, res, next){
 		'duration': req.body.duration,
 	}).returning('*')
 	.then(function (rows){
-		console.log(rows, 'hi there')
-		console.log(req.cookies['/user'], 'me')
+		// console.log(rows, 'hi there')
+		// console.log(req.cookies['/user'], 'me')
 		var rideId = rows[0].id
 		var email = req.cookies['/user']
 
 		knex('users').where({email: email}).returning('*')
 		.then(function(results){
-			console.log(results, 'this is the 3rd knex post')
+			// console.log(results, 'this is the 3rd knex post')
 
 			knex('favorite_rides').insert({'ride_id': rideId, 'user_id': results[0].id}).returning('*')
 			.then(function(rows){
-				console.log(rows, 'yes you did it!!!!')
+				// console.log(rows, 'yes you did it!!!!')
 
 			}).catch(function(err){
 				console.log(err, 'insert into favortes error')
@@ -141,16 +141,16 @@ router.post('/', function(req, res, next){
 
 router.post('/record', function(req, res, next){
 		var rideId = req.body.rideId;
-		console.log(req.cookies['/user'], 'me');
+		// console.log(req.cookies['/user'], 'me');
 		var email = req.cookies['/user'];
 
 		knex('users').where({'email': email}).returning('*')
 		.then(function(results){
-			console.log(results, 'this is the 3rd knex post');
+			// console.log(results, 'this is the 3rd knex post');
 
 			knex('favorite_rides').insert({'ride_id': rideId, 'user_id': results[0].id}).returning('*')
 			.then(function(rows){
-				console.log(rows, 'yes you did it!!!!');
+				// console.log(rows, 'yes you did it!!!!');
 
 			}).catch(function(err){
 				console.log(err, 'insert into favortes error');
@@ -167,7 +167,7 @@ router.delete('/:id', function(req, res, next){
 	//console.log(req.params.id, 'delete')
 	knex('favorite_rides').where('ride_id', req.params.id).first().del()
 	.then(function(rows){
-		console.log('hereeeeeee')
+		// console.log('hereeeeeee')
 		delete rows.id
 		delete rows.created_at
 		delete rows.updated_at

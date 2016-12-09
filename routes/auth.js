@@ -8,13 +8,13 @@ var knex = require('../knex');
 router.get('/token_exchange', function (req, res){
 	//use this to generate the request url and query it via your browser.
 	var code = strava.oauth.getRequestAccessURL({scope:"view_private,write"})
-	console.log(code);
+	// console.log(code);
 	if(code){
 		strava.oauth.getToken(code,function(err,payload) {
 			if(!err){
-				console.log('Got Token', payload);
+				// console.log('Got Token', payload);
 			} else {
-				console.log('Error getting Token', err);
+				// console.log('Error getting Token', err);
 			}
  		});
 	}
@@ -22,11 +22,11 @@ router.get('/token_exchange', function (req, res){
 
 
 router.get("/confirm", function(req, res){
-  console.log('hello')
+  // console.log('hello')
   strava.oauth.getToken(req.query.code,function(err,payload) {
-    console.log('payload')
-    console.log(payload, 'payload');
-    console.log(err, 'error')
+    // console.log('payload')
+    // console.log(payload, 'payload');
+    // console.log(err, 'error')
 
 		var access_token = payload.access_token;
 		// process.env.STRAVA_ACCESS_TOKEN = payload.access_token

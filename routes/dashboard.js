@@ -12,7 +12,7 @@ var strava = require('strava-v3');
 const boom = require('boom');
 
 router.get("/", function(req, res){
-  console.log('hello')
+  // console.log('hello')
   res.render('dashboard')
   // strava.oauth.getToken(req.query.code,function(err,payload) {
   //   console.log('payload')

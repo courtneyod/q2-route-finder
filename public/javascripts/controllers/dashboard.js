@@ -4,13 +4,15 @@ window.rideactivity = null;
 window.rideFavorites = null;
 
 window.onload = function() {
-  console.log('here now')
+  // console.log('here now')
   getUserInfo();
 //  console.log('here now')
 	getActivityTimeLine()
 		.done((results) => {
 
 			window.rideactivity = results;
+      //console.log(window.rideactivity, 'rideeeeeeee')
+      //console.log(results, 'results')
 			renderStravaActivity(window.rideactivity);
 			getFourWeekStatsTable(window.rideactivity);
 			getYearStatsTable('2016');
@@ -130,20 +132,42 @@ const renderUser = function(results) {
 
 
 	$('#first-name').text(results.first_name + " " + results.last_name);
-	$('#location').text(results.location);
+	var location = $('#location')
+  if(results.location.length <1){
+    var browserLocation = getLocation()
+    console.log(browserLocation, 'thisis current')
+  } else {
+    location.text(results.location);
+  }
   var photoUrl = results.photo_url;
-  console.log(results.photo_url, 'sjdhfjsdhfjdshfjshjfhs')
-  console.log(results.photo_url === "")
+  // console.log(results.photo_url, 'sjdhfjsdhfjdshfjshjfhs')
+  // console.log(results.photo_url === "")
   // if(results.photo_url === ""){
   //   photoUrl = 'https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png'
   // }
 	$('#photo-url').css("background-image", `url(${photoUrl})`);
 };
 
+function getLocation() {
+  if (navigator.geolocation) {
+    console.log('get location')
+      return navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+      return "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  console.log('in show position',position.coords.latitude, position.coords.longitude )
+  return {'lat': position.coords.latitude,
+     'long': position.coords.longitude}
+   }
+
 // ===========================Render the Strava Activity on Dashbaord ==============================
 
 const renderStravaActivity = function(results) {
 	const activityFeed = $('#activity-feed');
+  //console.log(results)
 
   if(results < 1){
     var addStravaContainer = $('<div>').addClass('link-strava-account');
@@ -189,7 +213,7 @@ const renderStravaActivity = function(results) {
 
 		day.text(date);
 		activityProfileImage.attr("src","http://1.bp.blogspot.com/-1gOMRhlVQVY/T9fD_nqvtUI/AAAAAAAAAVM/OL2GhVS_7Dw/s320/strava_cycling.png");
-		activityRideImage.attr("src","http://i.imgur.com/FcSaIeK.png");
+		activityRideImage.attr("src", `https://maps.googleapis.com/maps/api/staticmap?size=400x400&path=weight:5%7Ccolor:0xff0000ff%7Cenc:${results[i].map.summary_polyline}&key=AIzaSyBP3VaEqUzlMWA5k4C_MMDR3_vagF1V6Lk`);
 		activityHeadline.text(results[i].name + ', ' + results[i].location_city + ' ' + results[i].location_state);
 
 		var time = secondsToHms(results[i].moving_time);
@@ -270,8 +294,8 @@ const renderFavoriteActivity = function(results) {
     }
     day.text(name);
 		activityProfileImage.attr("src","http://manayunk.com/assets/content/images/DSR/DSR_BikeIcon_Circle.jpg");
-		activityRideImage.attr("src","http://i.imgur.com/FcSaIeK.png");
-		activityHeadline.text(results[i].city + ', ' + results[i].state);
+		activityRideImage.attr("src", `https://maps.googleapis.com/maps/api/staticmap?size=400x400&path=weight:5%7Ccolor:0xff0000ff%7Cenc:${results[i].encoded_polyline}&key=AIzaSyBP3VaEqUzlMWA5k4C_MMDR3_vagF1V6Lk`);
+		activityHeadline.text(results[i].ride_name + " " + results[i].city + ', ' + results[i].state);
 
 		entryDuration.text(results[i].duration);
 		entryDistance.text((results[i].distance/(1760)).toFixed(1) + 'mi');

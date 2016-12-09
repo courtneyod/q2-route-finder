@@ -3,7 +3,7 @@
 window.curBikeLine = null;
 window.marker = null;
 window.elevator = null;
-window.polylines = null;
+window.polylines = [];
 var mapObj;
 
 // window.routeExports = {};
@@ -255,10 +255,8 @@ function createPathsObject(trackPoints){
         });
       // paths.push( new google.maps.LatLng(trackPoints[i].y, trackPoints[i].x))
       }
-
+      window.polylines.push((trackPoints[i].y, trackPoints[i].x))
   }
-  window.polylines = paths
-  window.polylines = JSON.stringify(window.polylines)
   createAndAppendSubRoute(firstLatLongMaker, lastLatLongMaker, paths);
   }
 
@@ -297,17 +295,19 @@ function createClickEventForFavButton(eventName, element, route){
     var elementId = event.currentTarget;
     elementId = element.getAttribute('ride_id');
     console.log(window.polylines, 'here')
-
-    // var rideObj = {
-    //   ride: route,
-    //   polylines: window.polylines
-    // }
+    // Update the text field to display the polyline encodings
+       var encodeString = google.maps.geometry.encoding.encodePath(window.polylines).replace(/\\/g,'\\\\');
+       console.log(encodeString, 'encode')
+    var rideObj = {
+      ride: route,
+      polylines: encodeString
+    }
     const options = {
     contentType: 'application/json',
-    data: JSON.stringify(route),
+    data: JSON.stringify(rideObj),
     dataType: 'json',
     type: 'POST',
-    url: '/favorites'
+    url: '/rides'
   };
 
   $.ajax(options)

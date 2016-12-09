@@ -15,8 +15,9 @@ const boom = require('boom');
 router.get('/listactivities', function(req, res, next){
 
 	strava.athlete.listActivities({'access_token': process.env.STRAVA_ACCESS_TOKEN},function(err,payload) {
-		console.log(payload, 'for activity, payload');
+		console.log(payload, "\n", 'for activity, payload');
 		console.log(err, 'this is the listactivities error');
+		console.log('this is the error')
 		res.json(payload);
 	})
 
@@ -25,8 +26,8 @@ router.get('/listactivities', function(req, res, next){
 router.get('/listroutes', function(req, res, next){
 
 	strava.athlete.listRoutes({'access_token': process.env.STRAVA_ACCESS_TOKEN},function(err,payload) {
-		console.log(payload, 'for activity, payload')
-		console.log(err, 'this is the listactivities error')
+		// console.log(payload, 'for activity, payload')
+		// console.log(err, 'this is the listactivities error')
 		res.json(payload)
 	})
 

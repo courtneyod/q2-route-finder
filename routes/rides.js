@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var knex = require('../knex');
+var polyline = require('polyline');
+
 /* GET all of the rides in db. */
 router.get('/', function(req, res, next) {
   knex('rides').orderBy('city_state', 'asc')
@@ -34,9 +36,22 @@ router.get('/:id', function(req, res, next){
 
 /* Add a new ride to the db. */
 router.post('/', function(req, res, next){
-  console.log('in the post');
-  console.log(req.body);
-  knex('rides').insert(req.body).returning(['city_state', 'distance', 'duration', 'elevation_gain', 'elevation_loss', 'first_lat', 'first_lng', 'last_lat', 'last_lng', 'ride_with_gps_id'])
+  // console.log(req.body, 'here now')
+  // var encodedPolyline = polyline.encode(req.body.polylines);
+  // console.log(encodedPolyline, 'erueureu')
+  knex('rides').insert(
+    {'ride_with_gps_id': req.body.ride.ids,
+  		'city_state': req.body.ride.cityAndState,
+  		'distance': req.body.ride.distance,
+  		'elevation_gain': req.body.ride.elevation_gain,
+  		'elevation_loss': req.body.ride.elevation_loss,
+  		'first_lat': req.body.ride.first_lat,
+  		'last_lat': req.body.ride.last_lat,
+  		'first_lng': req.body.ride.first_lng,
+  		'last_lng': req.body.ride.last_lng,
+  		'duration': req.body.ride.duration,
+      'encoded_polyline': encodedPolyline
+    }).returning(['city_state', 'distance', 'duration', 'elevation_gain', 'elevation_loss', 'first_lat', 'first_lng', 'last_lat', 'last_lng', 'ride_with_gps_id'])
   .then(function(results){
 
     if(results){
