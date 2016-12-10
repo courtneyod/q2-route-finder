@@ -36,28 +36,37 @@ router.get('/:id', function(req, res, next){
 
 /* Add a new ride to the db. */
 router.post('/', function(req, res, next){
-  // console.log(req.body, 'here now')
+  console.log(req.body, 'here now');
   // var encodedPolyline = polyline.encode(req.body.polylines);
   // console.log(encodedPolyline, 'erueureu')
-  knex('rides').insert(
-    {'ride_with_gps_id': req.body.ride.ids,
-  		'city_state': req.body.ride.cityAndState,
-  		'distance': req.body.ride.distance,
-  		'elevation_gain': req.body.ride.elevation_gain,
-  		'elevation_loss': req.body.ride.elevation_loss,
-  		'first_lat': req.body.ride.first_lat,
-  		'last_lat': req.body.ride.last_lat,
-  		'first_lng': req.body.ride.first_lng,
-  		'last_lng': req.body.ride.last_lng,
-  		'duration': req.body.ride.duration,
-      'encoded_polyline': encodedPolyline
-    }).returning(['city_state', 'distance', 'duration', 'elevation_gain', 'elevation_loss', 'first_lat', 'first_lng', 'last_lat', 'last_lng', 'ride_with_gps_id'])
-  .then(function(results){
+  var rideGPS = req.body.ride.ids;
+  knex('rides').where('ride_with_gps_id', rideGPS).first()
+	.then(function(results){
+		if(!results){
+    knex('rides').insert(
+      {'ride_with_gps_id': req.body.ride.ids,
+    		'city_state': req.body.ride.cityAndState,
+    		'distance': req.body.ride.distance,
+    		'elevation_gain': req.body.ride.elevation_gain,
+    		'elevation_loss': req.body.ride.elevation_loss,
+    		'first_lat': req.body.ride.first_lat,
+    		'last_lat': req.body.ride.last_lat,
+    		'first_lng': req.body.ride.first_lng,
+    		'last_lng': req.body.ride.last_lng,
+    		'duration': req.body.ride.duration,
+        'encoded_polyline': req.body.polylines.encodedPolyline
+      }).returning(['city_state', 'distance', 'duration', 'elevation_gain', 'elevation_loss', 'first_lat', 'first_lng', 'last_lat', 'last_lng', 'ride_with_gps_id'])
+    .then(function(results){
 
-    if(results){
-      res.json(results[0]);
-    } else {
-      throw new Error('error with getting rides');
+      if(results){
+        res.json(results[0]);
+      } else {
+        throw new Error('error with getting rides');
+      }
+    })
+  } else {
+    console.log('you already have that ride in your database, here is the GPS ride id', results.ride_with_gps_id)
+      res.json(results)
     }
   }).catch(function(err){
     console.log(err);

@@ -4,17 +4,17 @@
 google.maps.event.addDomListener(window, 'load', initialize);
 
 function initialize() {
-
-
   var options = {
       types: ['(cities)'],
       componentRestrictions: { country: "us" }
 }
-var input = document.getElementById('location');
-var locationInput = document.getElementById('locations');
-var autocomplete = new google.maps.places.Autocomplete(input, options);
-var autocomplete = new google.maps.places.Autocomplete(locationInput, options);
+// ===========================ADD LOCATION AUTO COMPLETE=================================
+  var input = document.getElementById('location');
+  var locationInput = document.getElementById('locations');
+  var autocomplete = new google.maps.places.Autocomplete(input, options);
+  var autocomplete = new google.maps.places.Autocomplete(locationInput, options);
 
+// ===========================CREATE RANGE SLIDER=================================
 $( function() {
     $( "#slider-range" ).slider({
       range: true,
@@ -31,7 +31,7 @@ $( function() {
       var maxDistance = $("#slider-range").slider("values", 1);
   });
 
-
+// ===========================CREATE RANGE SLIDER=================================
   $( function() {
       $( "#slider-range-elevation" ).slider({
         range: true,

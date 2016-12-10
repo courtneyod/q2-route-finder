@@ -96,48 +96,64 @@ router.get('/', function(req, res, next){
 // });
 
 router.post('/', function(req, res, next){
-	knex('rides').insert({
-		'ride_with_gps_id': req.body.ids,
-		'city_state': req.body.cityAndState,
-		'distance': req.body.distance,
-		'elevation_gain': req.body.elevation_gain,
-		'elevation_loss': req.body.elevation_loss,
-		'first_lat': req.body.first_lat,
-		'last_lat': req.body.last_lat,
-		'first_lng': req.body.first_lng,
-		'last_lng': req.body.last_lng,
-		'duration': req.body.duration,
-	}).returning('*')
-	.then(function (rows){
-		// console.log(rows, 'hi there')
-		// console.log(req.cookies['/user'], 'me')
-		var rideId = rows[0].id
-		var email = req.cookies['/user']
+	console.log(req.body, 'this is req.body on favorites post')
+	//check if it exists
+	knex('rides').where('ride_with_gps_id', req.body.ride_with_gps_id).first()
+	.then(function(results){
+		if(!results){
+			knex('rides').insert({
+				'ride_with_gps_id': req.body.ids,
+				'city_state': req.body.cityAndState,
+				'distance': req.body.distance,
+				'elevation_gain': req.body.elevation_gain,
+				'elevation_loss': req.body.elevation_loss,
+				'first_lat': req.body.first_lat,
+				'last_lat': req.body.last_lat,
+				'first_lng': req.body.first_lng,
+				'last_lng': req.body.last_lng,
+				'duration': req.body.duration,
+			}).returning('*')
+			.then(function (rows){
+				var rideId = rows[0].id;
+				var email = req.cookies['/user'];
 
-		knex('users').where({email: email}).returning('*')
-		.then(function(results){
-			// console.log(results, 'this is the 3rd knex post')
+				knex('users').where({email: email}).returning('*')
+				.then(function(results){
+					knex('favorite_rides').insert({'ride_id': rideId, 'user_id': results[0].id}).returning('*')
+					.then(function(rows){
+						res.json(rows);
+					});
+				});
+			});
+		} else {
+			console.log(results, "the ride you favorited was already in database");
+			var rideId = results.id;
+			var email = req.cookies['/user'];
 
-			knex('favorite_rides').insert({'ride_id': rideId, 'user_id': results[0].id}).returning('*')
-			.then(function(rows){
-				// console.log(rows, 'yes you did it!!!!')
-
-			}).catch(function(err){
-				console.log(err, 'insert into favortes error')
+			knex('users').where({email: email}).returning('*')
+			.then(function(results){
+				knex('favorite_rides').insert({'ride_id': rideId, 'user_id': results[0].id}).returning('*')
+				.then(function(rows){
+					res.json(rows);
+				});
+			});
+		}
+	}).catch(function(err){
+				console.log(err, 'insert into favortes error');
 				res.status(401);
 				res.set('Content-Type', 'text/plain');
 				res.send('Unauthorized');
 			});
 		})
 
-
-	}).catch(function(err){
-		console.log(err)
-		res.status(401);
-		res.set('Content-Type', 'text/plain');
-		res.send('Unauthorized');
-	});
-});
+//
+// 	}).catch(function(err){
+// 		console.log(err)
+// 		res.status(401);
+// 		res.set('Content-Type', 'text/plain');
+// 		res.send('Unauthorized');
+// 	});
+// });
 
 router.post('/record', function(req, res, next){
 		var rideId = req.body.rideId;

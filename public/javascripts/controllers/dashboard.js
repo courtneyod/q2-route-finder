@@ -243,7 +243,6 @@ const renderStravaActivity = function(results) {
 
 
 // ====================== Render Favorite Rides ======================================
-
 const renderFavoriteActivity = function(results) {
   const activityFeed = $('#favorite-feed');
 
@@ -342,7 +341,6 @@ function convertDate(date){
 
 
 // ===========================Stats table drop down ==============================
-
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function showDropDown() {
@@ -365,25 +363,26 @@ window.onclick = function(event) {
   }
 };
 
+// ==========================UPDATE GRPAH YEAR==========================================
 function dropDownListener(){
-	var dropDownValues = document.getElementsByClassName('clickable')
+	var dropDownValues = document.getElementsByClassName('clickable');
 	//var dropDownButton = $('selection')
 	for(var i = 0; i < dropDownValues.length; i ++){
 		// Listen for the event.
-		dropDownValues[i].addEventListener('click', function (event) {
+		dropDownValues[i].addEventListener('click', function(event) {
 		  // e.target matches elem
 				if(event.target.innerHTML === "2015"){
-					getYearStatsTable('2015')
-					$('.selection').text('2015' + '∨')
+					getYearStatsTable('2015');
+					$('.selection').text('2015' + '∨');
 				} else if (event.target.innerHTML === "2014") {
-					getYearStatsTable('2014')
-					$('.selection').text('2014'  + '∨')
+					getYearStatsTable('2014');
+					$('.selection').text('2014'  + '∨');
 				} else if (event.target.innerHTML === "2013"){
-					getYearStatsTable('2013')
-					$('.selection').text('2013' + '∨')
+					getYearStatsTable('2013');
+					$('.selection').text('2013' + '∨');
 				} else {
-					getYearStatsTable('2016')
-					$('.selection').text('2016'  + '∨')
+					getYearStatsTable('2016');
+					$('.selection').text('2016'  + '∨');
 				}
 		}, false);
 	}
@@ -391,30 +390,29 @@ function dropDownListener(){
 }
 
 // ==========================Toggle ==========================================
-
 $( ".switch" ).click(function() {
-  var checkBox = document.getElementById('checked')
+  var checkBox = document.getElementById('checked');
   $( "#strava-activity-toggle" ).toggle('slow', function() {
 
     if(checkBox.checked === false){
-      $("#strava-activity-toggle" ).show()
+      $("#strava-activity-toggle" ).show();
 
-      $('.toggle-values-strava').css('color', '#2196F3')
-      $('.toggle-values-strava').show()
+      $('.toggle-values-strava').css('color', '#2196F3');
+      $('.toggle-values-strava').show();
 
-      $("#favorite-ride-toggle").hide()
+      $("#favorite-ride-toggle").hide();
 
-      $('.toggle-values-favorites').hide()
+      $('.toggle-values-favorites').hide();
     } else {
-      $("#strava-activity-toggle" ).hide()
+      $("#strava-activity-toggle" ).hide();
 
-      $('.toggle-values-strava').css('display', 'none')
-      $('.toggle-values-strava').hide()
+      $('.toggle-values-strava').css('display', 'none');
+      $('.toggle-values-strava').hide();
 
-      $("#favorite-ride-toggle").show()
+      $("#favorite-ride-toggle").show();
 
-      $('.toggle-values-favorites').css('color', '#2196F3')
-      $('.toggle-values-favorites').show()
+      $('.toggle-values-favorites').css('color', '#2196F3');
+      $('.toggle-values-favorites').show();
     }
 
   });
@@ -424,7 +422,6 @@ $( ".switch" ).click(function() {
 
 
 // ===========================REMOVE FAVORITE RIDE =================================
-
 function createClickEventForRemoveFav(eventName, element, route, removeElOne, removeElTwo){
 
   element[0].addEventListener(eventName, function(event) {

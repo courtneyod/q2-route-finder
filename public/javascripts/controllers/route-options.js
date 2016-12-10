@@ -3,6 +3,7 @@
 window.curBikeLine = null;
 window.marker = null;
 window.elevator = null;
+//to do - reset window.polylines when click a new rides
 window.polylines = [];
 var mapObj;
 
@@ -34,6 +35,7 @@ function init(){
   });
 }
 
+// ===========================GET QUERY PARAMS=================================
 function getQueryParams(){
   let url = window.location.href;
   url = decodeURI(url)
@@ -48,6 +50,7 @@ function getQueryParams(){
   return sortRangeSliders(vars)
 }
 
+// ===========================GRAB VALUES FROM RANGE SLIDER (PREVIOUS PAGE)=================================
 function sortRangeSliders(paramObj){
   //console.log(paramObj, 'paramObj')
   let distance = paramObj.distancerange;
@@ -65,6 +68,7 @@ function sortRangeSliders(paramObj){
   return paramObj
 }
 
+// ===========================update field bar w/ users preferences =================================
 function addValuesToInput(location, mileRange, maxDistance, minDistance, elevGain, elevMin){
   var inputLocation = document.getElementsByClassName("route-options-location")[0];
   location = location.substring(0, location.length - 20)
@@ -83,6 +87,7 @@ function addValuesToInput(location, mileRange, maxDistance, minDistance, elevGai
   inputElevMin.value = elevMin;
 }
 
+// ===========================Map routes into an easy to use obj =================================
 var mapRoutesToFriendlyObjects = function(routeOptions) {
   var routeIdArray = [];
   var routeContainerObj = [];
@@ -147,7 +152,7 @@ function geoCodeLatLong(routeContainerObj){
   grabFistLatLong(lat, lng, routeContainerObj, routeContainerObjLength, i);
   }
 }
-
+// ===========================Render Route Cards=================================
 /* Render the route cards to the page. It will loop through the api data and create a card for each possible ride */
 function renderRideOptions(route, routeContainerObjLength){
   var resultsContainer = document.getElementById('num-results-container');
@@ -211,7 +216,7 @@ function commaSeparateNumber(val){
     return val;
   }
 
-/* Create click event for each route card. The click event will call google polylines to draw the route */
+  // ===========================click event for route card =================================
 function createClickEventForEachCard(eventName, element){
   element.addEventListener(eventName, function(event) {
     var removeInnerShadow = document.getElementsByClassName('inner-shadow');
@@ -240,12 +245,13 @@ function displayRouteOnMap(routeId){
 }
 
 
-
-/* create Paths object with Lat and Longs for Google PolyLine */
+// ===========================create Paths object for Google PolyLine =================================
 function createPathsObject(trackPoints){
   var paths = [];
   var firstLatLongMaker = {lat:trackPoints[3].y,  lng: trackPoints[3].x}
   var lastLatLongMaker = {lat:trackPoints[trackPoints.length-1].y,  lng: trackPoints[trackPoints.length-1].x};
+
+  window.polylines = []
 
   for (var i = 3; i < trackPoints.length-4; i++) {
     if (trackPoints[i].y !== undefined && trackPoints[i].x !== undefined){
@@ -255,11 +261,13 @@ function createPathsObject(trackPoints){
         });
       // paths.push( new google.maps.LatLng(trackPoints[i].y, trackPoints[i].x))
       }
-      window.polylines.push((trackPoints[i].y, trackPoints[i].x))
+      window.polylines.push([trackPoints[i].y, trackPoints[i].x])
   }
   createAndAppendSubRoute(firstLatLongMaker, lastLatLongMaker, paths);
   }
 
+
+// ===========================APPEND POLYLINES AND MARKERS=================================
 function createAndAppendSubRoute(firstLatLongMaker, lastLatLongMaker, paths){
   // Load the Visualization API and the columnchart package.
   google.load('visualization', '1', {callback: 'console.log("working")', packages: ['columnchart']});
@@ -289,15 +297,14 @@ function latLongObject(routeObject){
 
 
 // ===========================SAVE FAVORITE RIDE =================================
-
 function createClickEventForFavButton(eventName, element, route){
   element.addEventListener(eventName, function(event) {
     var elementId = event.currentTarget;
     elementId = element.getAttribute('ride_id');
-    console.log(window.polylines, 'here')
+    // console.log(window.polylines, 'here')
     // Update the text field to display the polyline encodings
-       var encodeString = google.maps.geometry.encoding.encodePath(window.polylines).replace(/\\/g,'\\\\');
-       console.log(encodeString, 'encode')
+    var encodeString = encodeLatLngPolygon(window.polylines)
+    console.log(encodeString, 'here is after the lines are encoded')
     var rideObj = {
       ride: route,
       polylines: encodeString
@@ -311,8 +318,27 @@ function createClickEventForFavButton(eventName, element, route){
   };
 
   $.ajax(options)
-    .done(() => {
-      $('.favorites').text('Saved')
+    .done((results) => {
+      console.log(results, 'return after calling rides/ post')
+
+      const options = {
+      contentType: 'application/json',
+      data: JSON.stringify(results),
+      dataType: 'json',
+      type: 'POST',
+      url: '/favorites'
+      };
+
+      $.ajax(options)
+        .done((results) => {
+          console.log(results, 'return after calling favorites/ post');
+
+          $('.favorites').text('Saved');
+          //post ride to favorites
+        })
+        .fail(() => {
+          console.log('did not save ride to favorites');
+        });
     })
     .fail(() => {
       console.log('did not work')
@@ -320,4 +346,39 @@ function createClickEventForFavButton(eventName, element, route){
 
 
   });
+}
+
+
+// ===========================ENCODE POLYLINES=================================
+function encodeLatLngPolygon(array) {
+  var path = [];
+  var lat;
+  var long;
+
+  for(var i=0; i < array.length; i++) {
+    // console.log((array[i][0]), (array[i][1]))
+    lat = parseFloat(array[i][0])
+    long = parseFloat(array[i][1])
+
+    var xyz = new google.maps.LatLng(lat, long);
+    // var xyz = {lat: lat, lng: long}
+    // console.log(xyz, 'xyz,m,m,m,m,,m,m,m,m,m,')
+    path.push(xyz);
+
+  }
+  var polyOptions = {
+    strokeColor: '#000000',
+    strokeOpacity: 1.0,
+    strokeWeight: 3,
+    path: path
+  }
+  var poly = new google.maps.Polyline(polyOptions);
+
+  var polyPath = poly.getPath()
+
+    console.log(path, 'path')
+    console.log(polyPath, 'polyPath')
+  var code = google.maps.geometry.encoding.encodePath(polyPath);
+  // console.log(code, 'code')
+  return code;
 }

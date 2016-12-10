@@ -1,7 +1,6 @@
 window.onload = function() {
 	console.log('here now')
 	initMapSf()
-	//getPolyLines()
 }
 
 function initMapSf() {
@@ -9,7 +8,6 @@ function initMapSf() {
 		center: {lat: 37.787, lng: -122.396},
 		zoom: 14
 	});
-	//console.log(map)
 	getPolyLines(map)
 }
 
@@ -18,8 +16,6 @@ function getPolyLines(map){
 	url = window.location.href;
 	rideId = url.split('ride/')
 	rideId = rideId[1]
-	console.log(rideId)
-
 
    const options=  {
      dataType: 'json',
@@ -49,7 +45,7 @@ if(ride.length > 1){
 	}
 }
 
-//converts polyline to format googlemaps can use
+// ===========================converts polyline to format googlemaps can use=================================
 function convertPolyline (decodedPolyline) {
   let mapsPolyline = [];
   for(var i = 0; i < decodedPolyline.length; i++) {
@@ -62,7 +58,7 @@ function convertPolyline (decodedPolyline) {
   return mapsPolyline;
 }
 
-//creates new polyline
+// ===========================CREATE NEW POLYLINE=================================
 function renderNewPath(decodedPolyline) {
 console.log(decodedPolyline, 'here')
 var path = new google.maps.Polyline({

@@ -20,7 +20,7 @@ function parseDataCanvas(dataRoute){
   return dataRoutes;
 };
 
-/* Returns the min X value in our data list */
+// ===========================Returns the max X value in data list=================================
 function getMaxX(data){
   let min = 0;
   let possibleMinNumbers = data.map(function(cur){
@@ -30,7 +30,7 @@ function getMaxX(data){
   return min;
 }
 
-/* Returns the max Y value in our data list */
+// ===========================Returns the max Y value in data list=================================
 function getMaxY(data) {
     let max = 0;
     let possibleMaxNumbers = data.values.map(function(cur){
@@ -40,12 +40,12 @@ function getMaxY(data) {
     return max;
 }
 
-/* Return the x pixel for a graph point */
+// ===========================Return the x pixel for a graph point=================================
 function getXPixel(val, data) {
     return ((graph.width() - xPadding) / data.values.length) * val + (xPadding * 1.5);
 }
 
-/*  Return the y pixel for a graph point */
+// =========================== Return the y pixel for a graph point=================================
 function getYPixel(val, data, maxY) {
     return graph.height() - (((graph.height() - yPadding) / maxY) * val) - yPadding;
   }

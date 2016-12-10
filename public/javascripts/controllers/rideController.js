@@ -18,7 +18,6 @@ function addEventListenerMap(){
 function getRequest(eventName, element){
 
   element.addEventListener(eventName, function(event){
-    //console.log(event.currentTarget, 'current')
 
      var rideId = event.currentTarget.getAttribute('ride-id')
      //console.log(rideId)
