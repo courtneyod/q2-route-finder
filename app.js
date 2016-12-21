@@ -26,7 +26,7 @@ var createAccount = require('./routes/create-account');
 var socketsBackend = require('./routes/sockets-backend');
 var routeOptions = require('./routes/route-options');
 var encode = require('./routes/sockets-backend');
-var showride = require('./routes/showride');
+var showride = require('./routes/showRide');
 
 
 var app = express();
